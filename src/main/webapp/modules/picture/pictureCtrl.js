@@ -1,4 +1,4 @@
-app.controller('PictureCtrl', ['$scope', '$http', function ($scope, $http){
+app.controller('PictureCtrl', ['$scope', '$http', 'LoggerSvc', function ($scope, $http, LoggerSvc){
 
     $scope.ext = 'icon_' + $scope.extension;
     $scope.currentCol = 'col' + $scope.position;
@@ -23,11 +23,10 @@ app.controller('PictureCtrl', ['$scope', '$http', function ($scope, $http){
     $scope.openFolder = function(nameFolder) {
     	$http.get('/drive/list?' + 'rootName=' + nameFolder).
         success(function(data, status) {
-          console.log("success picture: " + status);
-          $scope.files = data;
+        	LoggerSvc.log('success picture', 'w');
         }).
         error(function(error, status) {
-	          console.log("error picture: " + status);
+        	LoggerSvc.log('error picture', 'e');;
         });
     }
 

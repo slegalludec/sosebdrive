@@ -36,14 +36,14 @@ var translations = {
         'WELCOME': 'bienvenue',
         'ADMINISTRATION': 'Administration',
         'FOLDERS': 'Dossiers',
-        'START_DATE' : 'date de début',
+        'START_DATE' : 'date de dï¿½but',
         'END_DATE' : 'date de fin',
         'USER_RIGHT' : 'droit utilisateur',
-        'DISCONNECT' : 'Vous êtes déconnecté !',
+        'DISCONNECT' : 'Vous ï¿½tes dï¿½connectï¿½ !',
 
         'TITLE_MANAGEMENT' : 'Gestion utilisateurs',
         'TITLE_USERS' : 'Liste utilisateurs',
-        'TITLE_DETAIL' : 'Détail utilisateur',
+        'TITLE_DETAIL' : 'Dï¿½tail utilisateur',
 
         'BUTTON_ADD_USER' : 'Ajouter',
         'BUTTON_UPDATE_USER' : 'Modifier',
@@ -54,12 +54,12 @@ var translations = {
 
         'ERROR_MSG_100' : 'login ou mot de passe vide',
         'ERROR_MSG_101' : 'mauvais login ou mauvais mot de passe',
-        'ERROR_MSG_102' : 'droit utilisateur expiré',
+        'ERROR_MSG_102' : 'droit utilisateur expirï¿½',
         'ERROR_MSG_110' : 'erreur inconnue'
     }
 };
 
-var app = angular.module('sosebDrive', ['pascalprecht.translate', 'ngRoute', 'ui.bootstrap']);
+var app = angular.module('sosebDrive', ['pascalprecht.translate', 'ngResource', 'ngRoute', 'ui.bootstrap']);
 
 /* translate configuration */
 /* routing configuration */

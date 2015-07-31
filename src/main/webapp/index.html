@@ -5,16 +5,23 @@
 
     <!-- External librairies -->
     <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
     <script type="application/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-      <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.1.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.1.js"></script>
     <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <!-- Internal librairies -->
     <script type="application/javascript" src="lib/angular-translate.min.js"></script>
     <script type="application/javascript" src="lib/angular-route.min.js"></script>
 
-    <!-- Controllers -->
+	<!-- Parent controller -->
     <script src="app.js"></script>
+
+	<!-- Services -->
+    <script type="application/javascript" src="services/log/LoggerSvc.js"></script>
+    <script type="application/javascript" src="services/rest/DriveRestSvc.js"></script>
+
+    <!-- Controllers -->
     <script type="application/javascript" src="modules/picture/pictureCtrl.js"></script>
     <script type="application/javascript" src="modules/connection/connectionCtrl.js"></script>
     <script type="application/javascript" src="modules/menuLeft/menuLeftCtrl.js"></script>
