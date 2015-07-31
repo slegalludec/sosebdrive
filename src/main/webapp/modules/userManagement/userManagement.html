@@ -1,0 +1,68 @@
+<div class="userManagement">
+
+    <div class="usersListHeader">
+        {{'TITLE_MANAGEMENT' | translate}}
+    </div>
+
+    <div class="usersTitle">
+        {{'TITLE_USERS' | translate}}
+    </div>
+    <div class="usersList">
+        <ul class="list-group">
+            <div ng-repeat="user in users">
+                <li class="list-group-item items" ng-click="details(user.id)">{{user.login}}</li>
+            </div>
+        </ul>
+    </div>
+
+    <div class="userDetail">
+
+        <div class="detailTitle">
+            {{'TITLE_DETAIL' | translate}}
+        </div>
+
+        <form novalidate name="userForm" class="formBorder">
+
+            <input type="hidden" ng-model="userBdd.id"/>
+
+            <div class="loginUser">
+                <label>{{'LOGIN' | translate}}:</label>
+                <input ng-class="inputLoginUser" type="text" ng-model="userBdd.login" required/>
+            </div>
+
+            <div class="passwordUser">
+                <label>{{'PASSWORD' | translate}}:</label>
+                <input ng-class="inputPasswordUser" type="text" ng-model="userBdd.password" required/>
+            </div>
+
+            <div class="startDate">
+                <datepicker-perso nameLabel="{{'START_DATE' | translate}}:" model="userBdd.startDate" classInput="inputStartDate" classCalendar="calendarTop"></datepicker-perso>
+
+                <!--<label>{{'START_DATE' | translate}}:</label>
+                <input ng-class="inputStartDate" type="text" ng-model="userBdd.startDate" placeholder="{{'PATTERN_DATE' | translate}}" required>
+                <div ng-click="" class="icon_calendar" ng-class="calendarTop"></div>-->
+            </div>
+
+            <div class="endDate">
+                <datepicker-perso nameLabel="{{'END_DATE' | translate}}:" model="userBdd.endDate" classInput="inputEndDate" classCalendar="calendarBottom"></datepicker-perso>
+
+                <!--<label>{{'END_DATE' | translate}}:</label>
+                <input ng-class="inputEndDate" type="text" ng-model="userBdd.endDate"  placeholder="{{'PATTERN_DATE' | translate}}" required/>
+                <div ng-click="" class="icon_calendar" ng-class="calendarBottom"></div>-->
+            </div>
+
+            <div class="userRight">
+                <label>{{'USER_RIGHT' | translate}}:</label>
+                <select ng-model="selectedRight" ng-options="right as right.label for right in rights" ng-class="inputRight" ng-selected="{{right.id == 2}}"></select>
+            </div>
+
+            <div ng-class="buttons">
+                <button ng-if="!isCreationMode" class="btn removeBtn" ng-click="remove(userBdd)" ng-disabled="!userForm.$valid">{{'BUTTON_REMOVE_USER' | translate}}</button>
+                <button ng-if="!isCreationMode" class="btn updateBtn" ng-click="update(userBdd)" ng-disabled="!userForm.$valid">{{'BUTTON_UPDATE_USER' | translate}}</button>
+                <button ng-if="isCreationMode" class="btn addBtn" ng-click="add(userBdd)" ng-disabled="!userForm.$valid">{{'BUTTON_ADD_USER' | translate}}</button>
+                <button ng-if="!isCreationMode" class="btn addBtn" ng-click="init()">{{'BUTTON_CANCEL_USER' | translate}}</button>
+            </div>
+        </form>
+    </div>
+
+</div>

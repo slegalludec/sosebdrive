@@ -1,0 +1,20 @@
+.banner {
+    position: absolute;
+    width: 260px;
+    height: 30px;
+    background-color: aliceblue;
+    border-bottom-left-radius: 50px 50px;
+    left: 1660px;
+    /*opacity: 0.9;*/
+}
+
+.bannerLogin {
+    position: absolute;
+    left: 60px;
+    top: 4px;
+}
+
+.icon {
+    left: 30px;
+
+}

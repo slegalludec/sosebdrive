@@ -1,0 +1,11 @@
+<div class="{{currentCol}} {{currentRaw}} posElt">
+    <div ng-if="isFolder" ng-click="openFolder(name)">
+        <div class="{{ext}}"></div>
+        <span class="label_doc">{{name}}</span>
+    </div>
+    <a ng-if="!isFolder" href="#" ng-click="openDoc(url)">
+        <div ng-if="!isImage" class="{{ext}}"></div>
+        <div ng-if="isImage" back-img="{{url}}" class="{{ext}}"></div>
+        <span class="label_doc">{{name}}</span>
+    </a>
+</div>

@@ -1,0 +1,44 @@
+.menuLeft {
+    position: absolute;
+    width: 260px;
+    height: 807px;
+    background-color: aliceblue;
+    /*opacity: 0.9;*/
+    top: 187px;
+}
+
+.administration {
+    position: absolute;
+    top: 774px;
+    left: 11px;
+}
+
+.headerItem {
+    background-color: gray;
+    height: 36px;
+    color: white;
+    width: 260px;
+    padding-left: 11px;
+    padding-top: 9px;
+}
+
+.headerAdm {
+    position: absolute;
+    top: 730px;
+}
+
+.treeMargin {
+    padding-left: 11px;
+}
+
+.treeItem {
+    padding-left: 3px;
+}
+
+.treeMargin2 {
+    padding-left: 31px;
+}
+
+.treeItem2 {
+    padding-left: 4px;
+}

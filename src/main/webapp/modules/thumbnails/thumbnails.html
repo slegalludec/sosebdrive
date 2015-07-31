@@ -1,0 +1,27 @@
+<div class="thumbnails" ng-init="initList('test1')">
+
+    <div class="contentHeader">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" class="form-control" />
+                  <span class="input-group-btn">
+                    <span class="btn btn-default glyphicon glyphicon-search" type="button" ></span>
+                  </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="contentThumbnails">
+
+        <div ng-repeat="doc in files">
+            <picture ng-if="$index < 14" name="doc.name" extension="doc.type" url="doc.url" position="$index" raw="0"></picture>
+            <picture ng-if="$index > 13 && $index < 28" name="doc.name" extension="doc.type" url="doc.url" position="$index" raw="1"></picture>
+            <picture ng-if="$index > 27 && $index < 42" name="doc.name" extension="doc.type" url="doc.url" position="$index" raw="2"></picture>
+            <picture ng-if="$index > 41 && $index < 56" name="doc.name" extension="doc.type" url="doc.url" position="$index" raw="3"></picture>
+            <picture ng-if="$index > 55 && $index < 70" name="doc.name" extension="doc.type" url="doc.url" position="$index" raw="4"></picture>
+            <picture ng-if="$index > 69 && $index < 84" name="doc.name" extension="doc.type" url="doc.url" position="$index" raw="5"></picture>
+        </div>
+
+    </div>
+
+</div>

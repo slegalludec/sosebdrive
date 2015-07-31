@@ -1,0 +1,9 @@
+.landscape {
+    background: url("../images/landscape.jpg") no-repeat;
+    background-size: 1920px 1000px;
+    position: absolute;
+}
+
+.error {
+    color: red;
+}

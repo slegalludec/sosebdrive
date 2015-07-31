@@ -1,0 +1,130 @@
+.icon_htm {
+    background: url("../../images/icon_html.png") no-repeat;
+    width: 96px;
+    height: 96px;
+}
+
+.icon_exc {
+    background: url("../../images/icon_excel.png") no-repeat;
+    width: 72px;
+    height: 70px;
+}
+
+.icon_pdf {
+    background: url("../../images/icon_pdf.png") no-repeat;
+    width: 70px;
+    height: 70px;
+}
+
+.icon_pwp {
+    background: url("../../images/icon_powerpoint.png") no-repeat;
+    width: 72px;
+    height: 70px;
+}
+
+.icon_wor {
+    background: url("../../images/icon_word.png") no-repeat;
+    width: 72px;
+    height: 70px;
+}
+
+.icon_fol {
+    background: url("../../images/icon_folder.png") no-repeat;
+    width: 70px;
+    height: 70px;
+}
+
+.icon_png {
+	width: 70px;
+    height: 70px;
+}
+
+.label_doc {
+    text-align: center;
+    width: 70px;
+    position: absolute;
+}
+
+
+.posElt {
+    position: absolute;
+}
+
+.col0, .col14, .col28, .col42, .col56, .col70 {
+    left: 30px;
+}
+
+.col1, .col15, .col29, .col43, .col57, .col71 {
+    left: 140px;
+}
+
+.col2, .col16, .col30, .col44, .col58, .col72 {
+    left: 250px;
+}
+
+.col3, .col17, .col31, .col45, .col59, .col73 {
+    left: 360px;
+}
+.col4, .col18, .col32, .col46, .col60, .col74 {
+    left: 470px;
+}
+
+.col5, .col19, .col33, .col47, .col61, .col75 {
+    left: 580px;
+}
+
+.col6, .col20, .col34, .col48, .col62, .col76 {
+    left: 690px;
+}
+
+.col7, .col21, .col35, .col49, .col63, .col77 {
+    left: 800px;
+}
+
+.col8, .col22, .col36, .col50, .col64, .col78 {
+    left: 915px;
+}
+
+.col9, .col23, .col37, .col51, .col65, .col79 {
+    left: 1025px;
+}
+
+.col10, .col24, .col38, .col52, .col66, .col80 {
+    left: 1135px;
+}
+
+.col11, .col25, .col39, .col53, .col67, .col81 {
+    left: 1245px;
+}
+
+.col12, .col26, .col40, .col54, .col68, .col82 {
+    left: 1355px;
+}
+
+.col13, .col27, .col41, .col55, .col69, .col83 {
+    left: 1465px;
+}
+
+.raw0 {
+    top: 60px;
+}
+
+.raw1 {
+    top: 190px
+}
+
+.raw2 {
+    top: 320px
+}
+
+.raw3 {
+    top: 450px
+}
+
+.raw4 {
+    top: 580px
+}
+
+.raw5 {
+    top: 710px
+}

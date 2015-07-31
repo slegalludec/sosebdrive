@@ -1,0 +1,69 @@
+.frame {
+    position: absolute;
+    width: 400px;
+    height: 180px;
+    background-color: lightgrey;
+    border: 2px solid black;
+    top: 380px;
+    left: 810px;
+}
+
+.connectionBtn {
+    position: absolute;
+    width: 120px;
+    height: 30px;
+    left: 136px;
+    top: 120px;
+    background-color: darkslategray;
+}
+
+.flag {
+    position: absolute;
+    left: 340px;
+    top: 150px;
+}
+
+#flag_fr, #flag_en {
+    border: 1px solid lightgrey;
+}
+
+#flag_fr:hover, #flag_en:hover {
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.errorPosition {
+    position: absolute;
+    width: 396px;
+    text-align: center;
+    top: 95px;
+}
+
+#labelLogin {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    width: 140px;
+}
+
+#labelPassword {
+    position: absolute;
+    left: 30px;
+    top: 70px;
+    width: 140px;
+}
+
+#inputLogin {
+    position: absolute;
+    left: 130px;
+    top: 25px;
+    width: 220px;
+
+}
+
+#inputPassword {
+    position: absolute;
+    left: 130px;
+    top: 65px;
+    width: 220px;
+}
