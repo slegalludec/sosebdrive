@@ -1,120 +1,116 @@
-app.controller('UserManagementCtrl', ['$scope', '$translate', function ($scope, $translate){
+app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'LoggerSvc', function ($scope, $translate, UserRestSvc, LoggerSvc){
 
-    $scope.isCreationMode = true;
-    $scope.userBdd = {};
-    $scope.buttons = 'buttonsOnly';
+	$scope.isCreationMode = true;
+	$scope.userBdd = {};
+	$scope.buttons = 'buttonsOnly';
 
-    /* current language */
-    var language =  $translate.use();
+	/* current language */
+	var language =  $translate.use();
 
-    /* Initialize input position */
-    $scope.inputLoginUser = 'inputLoginUser_' + language;
-    $scope.inputPasswordUser = 'inputPasswordUser_' + language;
-    $scope.inputRight = 'inputRight_' + language;
+	/* Initialize input position */
+	$scope.inputLoginUser = 'inputLoginUser_' + language;
+	$scope.inputPasswordUser = 'inputPasswordUser_' + language;
+	$scope.inputRight = 'inputRight_' + language;
+	$scope.inputStartDate = 'inputStartDate_' + language;
+	$scope.inputEndDate = 'inputEndDate_' + language;
+	$scope.positionLogin = 'inputLoginEn';
+	$scope.positionPassword = 'inputPasswordEn';
 
-    $scope.positionLogin = 'inputLoginEn';
-    $scope.positionPassword = 'inputPasswordEn';
+	$scope.rights = [
+	     {
+	    	 'id' : 1,
+	    	 'label' : 'administrator'
+	     },
+	     {
+	    	 'id' : 2,
+	    	 'label' : 'simple user'
+	     }
+	];
 
-    $scope.users = [
-        {
-            'id' : 1,
-            'login' : 'slegalludec',
-            'password' : 'f97sd8f',
-            'startDate' : '14/07/2015 12:30',
-            'endDate' : '14/07/2016 12:30',
-            'userRight' : 1
-        },
-        {
-            'id' : 2,
-            'login' : 'mdurant',
-            'password' : '897fzef',
-            'startDate' : '14/03/2014 12:30',
-            'endDate' : '14/07/2014 12:30',
-            'userRight' : 2
-        },
-        {
-            'id' : 4,
-            'login' : 'jpoirie',
-            'password' : '897fz85',
-            'startDate' : '14/07/2015 12:30',
-            'endDate' : '14/07/2016 12:30',
-            'userRight' : 2
-        },
-        {
-            'id' : 5,
-            'login' : 'fpeche',
-            'password' : '5z6fzapl',
-            'startDate' : '14/07/2015 12:30',
-            'endDate' : '14/07/2016 12:30',
-            'userRight' : 2
-        }
-    ];
+	$scope.selectedRight = $scope.rights[1];
 
-    $scope.rights = [
-        {
-            'id' : 1,
-            'label' : 'administrator'
-        },
-        {
-            'id' : 2,
-            'label' : 'simple user'
-        }
-    ];
+	/**
+	 * Init users list
+	 */
+	$scope.initList = function() {
+		UserRestSvc.usersList.list(function(response) {
+			LoggerSvc.log('success list user');
+			$scope.users = response.usersList;
+		},
+		function(response) {
+			LoggerSvc.log('error list user : ' + response.data.status, 'e');
+		});
+	}
 
-    $scope.selectedRight = $scope.rights[0];
+	/**
+	 * Add a new user
+	 * @param userBdd
+	 */
+	$scope.add = function(userBdd) {
+		UserRestSvc.userAdd.add({'userToCreate':userBdd}, function(response) {
+			LoggerSvc.log('success add user');
+			$scope.users = response.usersList;
+			userBdd = "";
+		},
+		function(response) {
+			LoggerSvc.log('error add user[login=' + userBdd.login + '] : ' + response.data.status, 'e');
+		});
+	};
 
-    /**
-     * Add a new user
-     * @param userBdd
-     */
-    $scope.add = function(userBdd) {
-        $scope.users.push(userBdd);
-        $scope.userBdd = {};
-    };
+	/**
+	 * Update the user selected
+	 * @param userBdd
+	 */
+	$scope.update = function(userBdd) {
+		UserRestSvc.userUpdate.update({'userToUpdate':userBdd, 'userid':userBdd.id}, function(response) {
+			LoggerSvc.log('success update user');
+			$scope.users = response.usersList;
+			userBdd = "";
+		},
+		function(response) {
+			LoggerSvc.log('error update user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
+		});
+	};
 
-    /**
-     * Update the user selected
-     * @param userBdd
-     */
-    $scope.update = function(userBdd) {
+	/**
+	 * Remove the user selected
+	 * @param userBdd
+	 */
+	$scope.remove = function(userBdd) {
+		UserRestSvc.userRemove.remove({id: userBdd.userId}, function(response) {
+			LoggerSvc.log('success remove user');
+			$scope.users = response.usersList;
+		},
+		function(response) {
+			LoggerSvc.log('error remove user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
+		});
+	};
 
-    };
+	/**
+	 * Show user details
+	 * @param id
+	 */
+	$scope.details = function(id) {
+		var userList = $scope.users;
 
-    /**
-     * Remove the user selected
-     * @param userBdd
-     */
-    $scope.remove = function(userBdd) {
-        for(var i=0; i<$scope.users.length; i++) {
-            if ($scope.users[i].id == userBdd.id) {
-                delete $scope.users[i];
-                $scope.init();
-            }
-        }
-    };
+		for (var item in userList) {
+			if (userList[item].userId == id) {
+				$scope.userBdd = userList[item];
+				$scope.isCreationMode = false;
+				$scope.buttons = 'buttonsMutli';
+				$scope.selectedRight = $scope.rights[userList[item].right-1];
+			}
 
-    /**
-     * Show user details
-     * @param id
-     */
-    $scope.details = function(id) {
-        for(var i=0; i<$scope.users.length; i++) {
-            if ($scope.users[i].id == id) {
-                $scope.userBdd = $scope.users[i];
-                $scope.isCreationMode = false;
-                $scope.buttons = 'buttonsMutli';
-                $scope.selectedRight = $scope.rights[$scope.users[i].userRight-1];
-            }
-        }
-    };
+		}
+	};
 
-    /**
-     * Cancel updating mode
-     */
-    $scope.init = function() {
-        $scope.isCreationMode = true;
-        $scope.userBdd = {};
-        $scope.buttons = 'buttonsOnly';
-    }
+	/**
+	 * Cancel updating mode
+	 */
+	$scope.init = function() {
+		$scope.isCreationMode = true;
+		$scope.userBdd = {};
+		$scope.buttons = 'buttonsOnly';
+	}
 
 }]);

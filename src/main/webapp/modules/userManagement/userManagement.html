@@ -1,4 +1,4 @@
-<div class="userManagement">
+<div class="userManagement" ng-init="initList()">
 
     <div class="usersListHeader">
         {{'TITLE_MANAGEMENT' | translate}}
@@ -10,7 +10,7 @@
     <div class="usersList">
         <ul class="list-group">
             <div ng-repeat="user in users">
-                <li class="list-group-item items" ng-click="details(user.id)">{{user.login}}</li>
+                <li class="list-group-item items" ng-click="details(user.userId)">{{user.login}}</li>
             </div>
         </ul>
     </div>
@@ -36,24 +36,22 @@
             </div>
 
             <div class="startDate">
-                <datepicker-perso nameLabel="{{'START_DATE' | translate}}:" model="userBdd.startDate" classInput="inputStartDate" classCalendar="calendarTop"></datepicker-perso>
+                <!-- <datepicker-perso nameLabel="{{'START_DATE' | translate}}:" model="userBdd.rightStartDate" classInput="inputStartDate" classCalendar="calendarTop"></datepicker-perso> -->
 
-                <!--<label>{{'START_DATE' | translate}}:</label>
+               	<label>{{'START_DATE' | translate}}:</label>
                 <input ng-class="inputStartDate" type="text" ng-model="userBdd.startDate" placeholder="{{'PATTERN_DATE' | translate}}" required>
-                <div ng-click="" class="icon_calendar" ng-class="calendarTop"></div>-->
             </div>
 
             <div class="endDate">
-                <datepicker-perso nameLabel="{{'END_DATE' | translate}}:" model="userBdd.endDate" classInput="inputEndDate" classCalendar="calendarBottom"></datepicker-perso>
+                <!-- <datepicker-perso nameLabel="{{'END_DATE' | translate}}:" model="userBdd.rightEndDate" classInput="inputEndDate" classCalendar="calendarBottom"></datepicker-perso> -->
 
-                <!--<label>{{'END_DATE' | translate}}:</label>
+               	<label>{{'END_DATE' | translate}}:</label>
                 <input ng-class="inputEndDate" type="text" ng-model="userBdd.endDate"  placeholder="{{'PATTERN_DATE' | translate}}" required/>
-                <div ng-click="" class="icon_calendar" ng-class="calendarBottom"></div>-->
             </div>
 
             <div class="userRight">
                 <label>{{'USER_RIGHT' | translate}}:</label>
-                <select ng-model="selectedRight" ng-options="right as right.label for right in rights" ng-class="inputRight" ng-selected="{{right.id == 2}}"></select>
+                <select ng-model="selectedRight" ng-options="right as right.label for right in rights" ng-class="inputRight"></select>
             </div>
 
             <div ng-class="buttons">

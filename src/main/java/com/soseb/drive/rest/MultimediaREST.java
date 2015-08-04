@@ -23,7 +23,7 @@ public class MultimediaREST {
 	 * @return the multimedia content
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Content> listFilesForFolder(@RequestParam(value = "rootName") final String rootName) {
+	public List<Content> listFilesForFolder(@RequestParam(value = "rootName", required = false) final String rootName) {
 
 		File rootFolder = new File(NasConstants.URL_MULTIMEDIA__SERVER);
 

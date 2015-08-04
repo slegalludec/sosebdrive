@@ -3,6 +3,7 @@ package com.soseb.drive.rest;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Attribute;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soseb.drive.common.StatusCode;
 import com.soseb.drive.constants.NasConstants;
 import com.soseb.drive.models.User;
+import com.soseb.drive.responses.UserResponse;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -77,7 +80,7 @@ public class UserREST {
 
 			user.addContent(new Element("login").setText(userToCreate.getLogin()));
 			user.addContent(new Element("password").setText(userToCreate.getPassword()));
-			user.addContent(new Element("isAuthorized").setText(String.valueOf(userToCreate.isAuthorized())));
+			user.addContent(new Element("isAuthorized").setText(String.valueOf(userToCreate.getRight())));
 			user.addContent(new Element("rightStartDate").setText(String.valueOf(userToCreate.getRightStartDate())));
 			user.addContent(new Element("rightEndDate").setText(String.valueOf(userToCreate.getRightEndDate())));
 
@@ -150,8 +153,8 @@ public class UserREST {
 	 * 			the user id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete/{userid}", method = RequestMethod.DELETE)
-	public boolean deleteUser(@PathVariable(value = "userid") final Integer userId) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public boolean deleteUser(@PathVariable(value = "id") final Integer userId) {
 
 		boolean isDeleted = false;	
 		Document doc = null;
@@ -182,6 +185,64 @@ public class UserREST {
 		}
 		return isDeleted;
 	}
+	
+	/**
+	 * Get list of users
+	 * @return
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public UserResponse getUsers() {
+		
+		UserResponse userResponse = new UserResponse();
+		List<User> listUsers = new ArrayList<User>();
+		Document doc = null;
+		File file = new File(xmlFile);
+		Element rootNode = null;
+
+		try {
+
+			// file doesn't exist
+			if (!file.exists()) {
+				//TODO error
+				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
+			} else {
+
+				// get the current xml file
+				SAXBuilder builder = new SAXBuilder();		 
+				doc = (Document) builder.build(file);
+				rootNode = doc.getRootElement();
+
+				// get the last id
+				List<Element> listUsersXml = rootNode.getChildren("user");
+
+				// remove the element passing in parameter
+				for (int i=0 ; i < listUsersXml.size(); i++) {
+					User currentUser = new User();
+					currentUser.setUserId(listUsersXml.get(i).getAttribute("id").getIntValue());
+					currentUser.setLogin(listUsersXml.get(i).getChild("login").getValue());
+					currentUser.setPassword(listUsersXml.get(i).getChild("password").getValue());
+					currentUser.setRightStartDate(listUsersXml.get(i).getChild("rightStartDate").getValue());
+					currentUser.setRightEndDate(listUsersXml.get(i).getChild("rightEndDate").getValue());
+					currentUser.setRight(Integer.parseInt(listUsersXml.get(i).getChild("isAuthorized").getValue()));
+					listUsers.add(currentUser);
+				}				
+				
+				// Success 
+				userResponse.setResponseCode(StatusCode.CODE_2.getCode());
+				userResponse.setUsersList(listUsers);
+			}
+			
+		} catch (IOException io) {
+			io.printStackTrace();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(io.getMessage());
+		} catch (JDOMException jdom) {
+			jdom.printStackTrace();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(jdom.getMessage());
+		}
+		return userResponse;
+	}
 
 	/**
 	 * Update user with new values
@@ -196,7 +257,7 @@ public class UserREST {
 		try {
 			element.getChild("login").setText(userToUpdate.getLogin());
 			element.getChild("password").setText(userToUpdate.getPassword());
-			element.getChild("isAuthorized").setText(String.valueOf(userToUpdate.isAuthorized()));
+			element.getChild("isAuthorized").setText(String.valueOf(userToUpdate.getRight()));
 			element.getChild("rightStartDate").setText(String.valueOf(userToUpdate.getRightStartDate()));
 			element.getChild("rightEndDate").setText(String.valueOf(userToUpdate.getRightEndDate()));
 

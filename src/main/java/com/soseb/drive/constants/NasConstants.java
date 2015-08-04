@@ -11,7 +11,7 @@ public class NasConstants {
 	/**
 	 * Url of authentication  file
 	 */
-	public static final String URL_XML_FILE_AUTHENTICATION = "F:/Softwares/Dev/";
+	public static final String URL_XML_FILE_AUTHENTICATION = "E:/sle/";
 	
 	/**
 	 * Name of authentication file

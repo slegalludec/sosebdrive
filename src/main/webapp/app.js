@@ -36,14 +36,14 @@ var translations = {
         'WELCOME': 'bienvenue',
         'ADMINISTRATION': 'Administration',
         'FOLDERS': 'Dossiers',
-        'START_DATE' : 'date de d�but',
+        'START_DATE' : 'date de début',
         'END_DATE' : 'date de fin',
         'USER_RIGHT' : 'droit utilisateur',
-        'DISCONNECT' : 'Vous �tes d�connect� !',
+        'DISCONNECT' : 'Vous êtes déconnecté !',
 
         'TITLE_MANAGEMENT' : 'Gestion utilisateurs',
         'TITLE_USERS' : 'Liste utilisateurs',
-        'TITLE_DETAIL' : 'D�tail utilisateur',
+        'TITLE_DETAIL' : 'Détail utilisateur',
 
         'BUTTON_ADD_USER' : 'Ajouter',
         'BUTTON_UPDATE_USER' : 'Modifier',
@@ -54,7 +54,7 @@ var translations = {
 
         'ERROR_MSG_100' : 'login ou mot de passe vide',
         'ERROR_MSG_101' : 'mauvais login ou mauvais mot de passe',
-        'ERROR_MSG_102' : 'droit utilisateur expir�',
+        'ERROR_MSG_102' : 'droit utilisateur expiré',
         'ERROR_MSG_110' : 'erreur inconnue'
     }
 };

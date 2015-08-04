@@ -1,4 +1,4 @@
-app.controller('PictureCtrl', ['$scope', '$http', 'LoggerSvc', function ($scope, $http, LoggerSvc){
+app.controller('PictureCtrl', ['$scope', '$http', 'LoggerSvc', 'DriveRestSvc', function ($scope, $http, LoggerSvc, DriveRestSvc){
 
     $scope.ext = 'icon_' + $scope.extension;
     $scope.currentCol = 'col' + $scope.position;
@@ -21,13 +21,8 @@ app.controller('PictureCtrl', ['$scope', '$http', 'LoggerSvc', function ($scope,
     }
 
     $scope.openFolder = function(nameFolder) {
-    	$http.get('/drive/list?' + 'rootName=' + nameFolder).
-        success(function(data, status) {
-        	LoggerSvc.log('success picture', 'w');
-        }).
-        error(function(error, status) {
-        	LoggerSvc.log('error picture', 'e');;
-        });
+    	$scope.files = DriveRestSvc.get({rootName : nameFolder}, function() {
+    		LoggerSvc.log('success picture', 'w');
+    	});
     }
-
 }]);

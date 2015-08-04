@@ -1,7 +1,6 @@
 package com.soseb.drive.models;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * User model
@@ -16,6 +15,11 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * user id
+	 */
+	private int userId;
+	
+	/**
 	 * user login
 	 */
 	private String login;
@@ -28,17 +32,31 @@ public class User implements Serializable {
 	/**
 	 * user right
 	 */
-	private boolean isAuthorized;
+	private int right;
 	
 	/**
 	 * right start date
 	 */
-	private Date rightStartDate;
+	private String rightStartDate;
 	
 	/**
 	 * right end date
 	 */
-	private Date rightEndDate;
+	private String rightEndDate;
+	
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	/**
 	 * @return the login
@@ -69,44 +87,44 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * @return the isAuthorized
+	 * @return the right
 	 */
-	public boolean isAuthorized() {
-		return isAuthorized;
+	public int getRight() {
+		return right;
 	}
 
 	/**
-	 * @param isAuthorized the isAuthorized to set
+	 * @param right the right to set
 	 */
-	public void setAuthorized(boolean isAuthorized) {
-		this.isAuthorized = isAuthorized;
+	public void setRight(int right) {
+		this.right = right;
 	}
 
 	/**
 	 * @return the rightStartDate
 	 */
-	public Date getRightStartDate() {
+	public String getRightStartDate() {
 		return rightStartDate;
 	}
 
 	/**
 	 * @param rightStartDate the rightStartDate to set
 	 */
-	public void setRightStartDate(Date rightStartDate) {
+	public void setRightStartDate(String rightStartDate) {
 		this.rightStartDate = rightStartDate;
 	}
 
 	/**
 	 * @return the rightEndDate
 	 */
-	public Date getRightEndDate() {
+	public String getRightEndDate() {
 		return rightEndDate;
 	}
 
 	/**
 	 * @param rightEndDate the rightEndDate to set
 	 */
-	public void setRightEndDate(Date rightEndDate) {
+	public void setRightEndDate(String rightEndDate) {
 		this.rightEndDate = rightEndDate;
 	}	
 }

@@ -3,10 +3,13 @@ package com.soseb.drive.common;
 public enum StatusCode {
 	
 	CODE_1(1, "user connected"),
+	CODE_2(2, "users list"),
 	CODE_100(100, "login or pasword empty"),
 	CODE_101(101, "bad login or bad password"),
 	CODE_102(102, "user right expired"),
-	CODE_110(110, "unknow error");
+	CODE_103(103, "authentication file not founded !"),
+	CODE_110(110, "unknow error"),
+	CODE_111(111, "ws error");
 
 	/**
 	 * status code
