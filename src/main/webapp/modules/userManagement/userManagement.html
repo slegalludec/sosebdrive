@@ -21,7 +21,7 @@
             {{'TITLE_DETAIL' | translate}}
         </div>
 
-        <form novalidate name="userForm" class="formBorder">
+        <form novalidate name="userForm" class="formBorder" method="post">
 
             <input type="hidden" ng-model="userBdd.id"/>
 
@@ -39,14 +39,14 @@
                 <!-- <datepicker-perso nameLabel="{{'START_DATE' | translate}}:" model="userBdd.rightStartDate" classInput="inputStartDate" classCalendar="calendarTop"></datepicker-perso> -->
 
                	<label>{{'START_DATE' | translate}}:</label>
-                <input ng-class="inputStartDate" type="text" ng-model="userBdd.startDate" placeholder="{{'PATTERN_DATE' | translate}}" required>
+                <input ng-class="inputStartDate" type="text" ng-model="userBdd.rightStartDate" placeholder="{{'PATTERN_DATE' | translate}}" required>
             </div>
 
             <div class="endDate">
                 <!-- <datepicker-perso nameLabel="{{'END_DATE' | translate}}:" model="userBdd.rightEndDate" classInput="inputEndDate" classCalendar="calendarBottom"></datepicker-perso> -->
 
                	<label>{{'END_DATE' | translate}}:</label>
-                <input ng-class="inputEndDate" type="text" ng-model="userBdd.endDate"  placeholder="{{'PATTERN_DATE' | translate}}" required/>
+                <input ng-class="inputEndDate" type="text" ng-model="userBdd.rightEndDate"  placeholder="{{'PATTERN_DATE' | translate}}" required/>
             </div>
 
             <div class="userRight">

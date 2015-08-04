@@ -13,11 +13,10 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import org.jdom2.xpath.XPath;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soseb.drive.common.StatusCode;
@@ -38,13 +37,14 @@ public class UserREST {
 	 * @return
 	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public boolean createUser(@RequestParam(value = "userToCreate") final User userToCreate) {
+	public UserResponse createUser(@RequestBody final User userBdd) {
 
-		boolean isInserted = false;	
+		UserResponse userResponse = null;
 		Document doc = null;
 		File file = new File(xmlFile);
 		Element rootNode = null;
 		Element user = null;
+		boolean fistInsert = false;
 
 		try {
 
@@ -59,7 +59,10 @@ public class UserREST {
 				// user element
 				user = new Element("user");
 				user.setAttribute(new Attribute("id", "1"));
-
+				
+				// first insertion
+				fistInsert = true;
+			
 			} else {
 
 				// Get the current xml file
@@ -74,29 +77,43 @@ public class UserREST {
 				// user element
 				user = new Element("user");
 				user.setAttribute(new Attribute("id", String.valueOf(nextId)));
-
 			}
 
-
-			user.addContent(new Element("login").setText(userToCreate.getLogin()));
-			user.addContent(new Element("password").setText(userToCreate.getPassword()));
-			user.addContent(new Element("isAuthorized").setText(String.valueOf(userToCreate.getRight())));
-			user.addContent(new Element("rightStartDate").setText(String.valueOf(userToCreate.getRightStartDate())));
-			user.addContent(new Element("rightEndDate").setText(String.valueOf(userToCreate.getRightEndDate())));
+			user.addContent(new Element("login").setText(userBdd.getLogin()));
+			user.addContent(new Element("password").setText(userBdd.getPassword()));
+			user.addContent(new Element("right").setText(String.valueOf(userBdd.getRight())));
+			user.addContent(new Element("rightStartDate").setText(String.valueOf(userBdd.getRightStartDate())));
+			user.addContent(new Element("rightEndDate").setText(String.valueOf(userBdd.getRightEndDate())));
 
 			doc.getRootElement().addContent(user);
 
 			XMLOutputter xmlOutput = new XMLOutputter();
 			xmlOutput.setFormat(Format.getPrettyFormat());
 			xmlOutput.output(doc, new FileWriter(xmlFile));
-
-			isInserted = true;
+			
+			userResponse = getUsers();
+			
+			// indicate the first insertion
+			if (fistInsert) {
+				userResponse.setResponseCode(StatusCode.COD_10.getCode());
+				userResponse.setResponseError("New file " + xmlFile + " is created !");
+			} else {
+				userResponse.setResponseCode(StatusCode.CODE_3.getCode());
+				userResponse.setResponseError("User " + userBdd.getLogin() + " is created !");
+			}
+			
 		} catch (IOException io) {
 			io.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(io.getMessage());
 		} catch (JDOMException jdom) {
 			jdom.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(jdom.getMessage());
 		}
-		return isInserted;
+		return userResponse;
 	}
 
 	/**
@@ -107,10 +124,10 @@ public class UserREST {
 	 * 			the user with elements to update
 	 * @return
 	 */
-	@RequestMapping(value = "/update/{userid}", method = RequestMethod.PUT)
-	public boolean updateUser(@RequestParam(value = "userToUpdate") final User userToUpdate, @PathVariable(value = "userid") final Integer userId) {
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	public UserResponse updateUser(@RequestBody final User userBdd, @PathVariable(value = "id") final Integer userId) {
 
-		boolean isUpdated = false;	
+		UserResponse userResponse = null;
 		Document doc = null;
 		File file = new File(xmlFile);
 		Element rootNode = null;
@@ -119,7 +136,8 @@ public class UserREST {
 
 			// file doesn't exist
 			if (!file.exists()) {
-				//TODO error
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
 			} else {
 
 				// get the current xml file
@@ -133,18 +151,27 @@ public class UserREST {
 				// remove the element passing in parameter
 				for (int i=0 ; i < listUsers.size(); i++) {
 					if (listUsers.get(i).getAttributeValue("id").equals(String.valueOf(userId))) {
-						updateUser(userToUpdate, doc, listUsers.get(i));
+						updateUser(userBdd, doc, listUsers.get(i));
 						break;
 					}
-				}				
+				}
+				userResponse = getUsers();
+				userResponse.setResponseCode(StatusCode.CODE_4.getCode());
+				userResponse.setResponseError("User " + userBdd.getLogin() + " is updated !");
 			}
 
 		} catch (IOException io) {
 			io.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(io.getMessage());
 		} catch (JDOMException jdom) {
 			jdom.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(jdom.getMessage());
 		}
-		return isUpdated;
+		return userResponse;
 	}
 
 	/**
@@ -153,10 +180,10 @@ public class UserREST {
 	 * 			the user id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public boolean deleteUser(@PathVariable(value = "id") final Integer userId) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public UserResponse deleteUser(@PathVariable(value = "id") final Integer userId) {
 
-		boolean isDeleted = false;	
+		UserResponse userResponse = null;
 		Document doc = null;
 		File file = new File(xmlFile);
 
@@ -164,35 +191,45 @@ public class UserREST {
 
 			// file doesn't exist
 			if (!file.exists()) {
-				//TODO error
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
 			} else {
 
 				// get the current xml file
 				SAXBuilder builder = new SAXBuilder();		 
 				doc = (Document) builder.build(file);
 
-				@SuppressWarnings("deprecation")
+				/**@SuppressWarnings("deprecation")
 				XPath xpath = XPath.newInstance("//users-group/user[@id=" + userId + "]");
 				@SuppressWarnings("deprecation")
-				Element el = (Element) xpath.selectSingleNode(doc);
-				isDeleted = el.getParent().removeContent(el);
+				Element el = (Element) xpath.selectSingleNode(doc);*/
+
+				userResponse = getUsers();
+				userResponse.setResponseCode(StatusCode.CODE_5.getCode());
+				userResponse.setResponseError("User with id " + userId + " is removed !");
 			}
 
 		} catch (IOException io) {
 			io.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(io.getMessage());
 		} catch (JDOMException jdom) {
 			jdom.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(jdom.getMessage());
 		}
-		return isDeleted;
+		return userResponse;
 	}
-	
+
 	/**
 	 * Get list of users
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public UserResponse getUsers() {
-		
+
 		UserResponse userResponse = new UserResponse();
 		List<User> listUsers = new ArrayList<User>();
 		Document doc = null;
@@ -203,7 +240,6 @@ public class UserREST {
 
 			// file doesn't exist
 			if (!file.exists()) {
-				//TODO error
 				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
 			} else {
 
@@ -221,17 +257,17 @@ public class UserREST {
 					currentUser.setUserId(listUsersXml.get(i).getAttribute("id").getIntValue());
 					currentUser.setLogin(listUsersXml.get(i).getChild("login").getValue());
 					currentUser.setPassword(listUsersXml.get(i).getChild("password").getValue());
+					currentUser.setRight(Integer.parseInt(listUsersXml.get(i).getChild("right").getValue()));
 					currentUser.setRightStartDate(listUsersXml.get(i).getChild("rightStartDate").getValue());
 					currentUser.setRightEndDate(listUsersXml.get(i).getChild("rightEndDate").getValue());
-					currentUser.setRight(Integer.parseInt(listUsersXml.get(i).getChild("isAuthorized").getValue()));
 					listUsers.add(currentUser);
 				}				
-				
+
 				// Success 
 				userResponse.setResponseCode(StatusCode.CODE_2.getCode());
 				userResponse.setUsersList(listUsers);
 			}
-			
+
 		} catch (IOException io) {
 			io.printStackTrace();
 			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
@@ -257,7 +293,7 @@ public class UserREST {
 		try {
 			element.getChild("login").setText(userToUpdate.getLogin());
 			element.getChild("password").setText(userToUpdate.getPassword());
-			element.getChild("isAuthorized").setText(String.valueOf(userToUpdate.getRight()));
+			element.getChild("right").setText(String.valueOf(userToUpdate.getRight()));
 			element.getChild("rightStartDate").setText(String.valueOf(userToUpdate.getRightStartDate()));
 			element.getChild("rightEndDate").setText(String.valueOf(userToUpdate.getRightEndDate()));
 

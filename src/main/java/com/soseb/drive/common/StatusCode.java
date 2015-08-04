@@ -4,6 +4,10 @@ public enum StatusCode {
 	
 	CODE_1(1, "user connected"),
 	CODE_2(2, "users list"),
+	CODE_3(3, "new user created"),
+	CODE_4(4, "user is updated"),
+	CODE_5(5, "user is removed"),
+	COD_10(10, "new file multimediaAuthent.xml is created"),
 	CODE_100(100, "login or pasword empty"),
 	CODE_101(101, "bad login or bad password"),
 	CODE_102(102, "user right expired"),

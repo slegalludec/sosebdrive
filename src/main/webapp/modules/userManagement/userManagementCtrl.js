@@ -16,29 +16,23 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	$scope.positionLogin = 'inputLoginEn';
 	$scope.positionPassword = 'inputPasswordEn';
 
-	$scope.rights = [
-	     {
-	    	 'id' : 1,
-	    	 'label' : 'administrator'
-	     },
-	     {
-	    	 'id' : 2,
-	    	 'label' : 'simple user'
-	     }
-	];
+	/* rights list */
+	$scope.rights = [{ 'id' : 1, 'label' : 'administrator' }, { 'id' : 2, 'label' : 'simple user' }];
 
+	/* right selected by default */
 	$scope.selectedRight = $scope.rights[1];
 
 	/**
 	 * Init users list
 	 */
 	$scope.initList = function() {
-		UserRestSvc.usersList.list(function(response) {
-			LoggerSvc.log('success list user');
-			$scope.users = response.usersList;
-		},
-		function(response) {
-			LoggerSvc.log('error list user : ' + response.data.status, 'e');
+		UserRestSvc.usersList.list(
+			function(response) {
+				LoggerSvc.log('success list user');
+				$scope.users = response.usersList;
+			},
+			function(response) {
+				LoggerSvc.log('error list user : ' + response.data.status, 'e');
 		});
 	}
 
@@ -47,13 +41,15 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.add = function(userBdd) {
-		UserRestSvc.userAdd.add({'userToCreate':userBdd}, function(response) {
-			LoggerSvc.log('success add user');
-			$scope.users = response.usersList;
-			userBdd = "";
-		},
-		function(response) {
-			LoggerSvc.log('error add user[login=' + userBdd.login + '] : ' + response.data.status, 'e');
+		userBdd.right = $scope.selectedRight.id;
+		UserRestSvc.userAdd.add(userBdd, 
+			function(response) {
+				LoggerSvc.log('success add user');
+				$scope.users = response.usersList;
+				resetFields();
+			},
+			function(response) {
+				LoggerSvc.log('error add user[login=' + userBdd.login + '] : ' + response.data.status, 'e');
 		});
 	};
 
@@ -62,13 +58,15 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.update = function(userBdd) {
-		UserRestSvc.userUpdate.update({'userToUpdate':userBdd, 'userid':userBdd.id}, function(response) {
-			LoggerSvc.log('success update user');
-			$scope.users = response.usersList;
-			userBdd = "";
-		},
-		function(response) {
-			LoggerSvc.log('error update user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
+		userBdd.right = $scope.selectedRight.id;
+		UserRestSvc.userUpdate.update(userBdd, {id:userBdd.userId}, 
+			function(response) {
+				LoggerSvc.log('success update user');
+				$scope.users = response.usersList;
+				resetFields();
+			},
+			function(response) {
+				LoggerSvc.log('error update user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
 		});
 	};
 
@@ -77,12 +75,14 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.remove = function(userBdd) {
-		UserRestSvc.userRemove.remove({id: userBdd.userId}, function(response) {
-			LoggerSvc.log('success remove user');
-			$scope.users = response.usersList;
-		},
-		function(response) {
-			LoggerSvc.log('error remove user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
+		UserRestSvc.userRemove.remove({id:userBdd.userId}, 
+			function(response) {
+				LoggerSvc.log('success remove user');
+				$scope.users = response.usersList;
+				resetFields();
+			},
+			function(response) {
+				LoggerSvc.log('error remove user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
 		});
 	};
 
@@ -111,6 +111,16 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 		$scope.isCreationMode = true;
 		$scope.userBdd = {};
 		$scope.buttons = 'buttonsOnly';
+	}
+	
+	/**
+	 * reset fields value
+	 */
+	var resetFields = function() {
+		$scope.userBdd.login = "";
+		$scope.userBdd.password = "";
+		$scope.userBdd.rightStartDate = "";
+		$scope.userBdd.rightEndDate = "";
 	}
 
 }]);
