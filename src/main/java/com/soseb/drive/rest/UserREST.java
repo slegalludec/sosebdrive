@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -48,60 +49,68 @@ public class UserREST {
 
 		try {
 
-			// File doesn't exist
-			if (!file.exists()) {
-
-				// root element
-				rootNode = new Element("users-group");
-				doc = new Document();
-				doc.setRootElement(rootNode);
-
-				// user element
-				user = new Element("user");
-				user.setAttribute(new Attribute("id", "1"));
-				
-				// first insertion
-				fistInsert = true;
-			
+			if (!checkField(userBdd)) {
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_104.getCode());
+				userResponse.setResponseError(StatusCode.CODE_104.getDescription());
 			} else {
+				// File doesn't exist
+				if (!file.exists()) {
 
-				// Get the current xml file
-				SAXBuilder builder = new SAXBuilder();		 
-				doc = (Document) builder.build(file);
-				rootNode = doc.getRootElement();
+					// root element
+					rootNode = new Element("users-group");
+					doc = new Document();
+					doc.setRootElement(rootNode);
 
-				// get the last id
-				List<Element> listUsers = rootNode.getChildren("user");
-				int nextId = Integer.parseInt(listUsers.get(listUsers.size()-1).getAttributeValue("id")) + 1;
+					// user element
+					user = new Element("user");
+					user.setAttribute(new Attribute("id", "1"));
 
-				// user element
-				user = new Element("user");
-				user.setAttribute(new Attribute("id", String.valueOf(nextId)));
+					// first insertion
+					fistInsert = true;
+
+				} else {
+
+					// Get the current xml file
+					SAXBuilder builder = new SAXBuilder();		 
+					doc = (Document) builder.build(file);
+					rootNode = doc.getRootElement();
+
+					// get the last id
+					List<Element> listUsers = rootNode.getChildren("user");
+					int nextId = Integer.parseInt(listUsers.get(listUsers.size()-1).getAttributeValue("id")) + 1;
+
+					// user element
+					user = new Element("user");
+					user.setAttribute(new Attribute("id", String.valueOf(nextId)));
+				}
+
+				user.addContent(new Element("login").setText(userBdd.getLogin()));
+				user.addContent(new Element("password").setText(userBdd.getPassword()));
+				user.addContent(new Element("right").setText(String.valueOf(userBdd.getRight())));
+				user.addContent(new Element("rightStartDate").setText(String.valueOf(userBdd.getRightStartDate())));
+				user.addContent(new Element("rightEndDate").setText(String.valueOf(userBdd.getRightEndDate())));
+
+				doc.getRootElement().addContent(user);
+
+				XMLOutputter xmlOutput = new XMLOutputter();
+				xmlOutput.setFormat(Format.getPrettyFormat());
+				xmlOutput.output(doc, new FileWriter(xmlFile));
+
+				userResponse = getUsers();
+
+				// indicate the first insertion
+				if (fistInsert) {
+					userResponse.setResponseCode(StatusCode.COD_10.getCode());
+					userResponse.setResponseError("New file " + xmlFile + " is created !");
+				} else {
+					userResponse.setResponseCode(StatusCode.CODE_3.getCode());
+					userResponse.setResponseError("User " + userBdd.getLogin() + " is created !");
+				}
 			}
 
-			user.addContent(new Element("login").setText(userBdd.getLogin()));
-			user.addContent(new Element("password").setText(userBdd.getPassword()));
-			user.addContent(new Element("right").setText(String.valueOf(userBdd.getRight())));
-			user.addContent(new Element("rightStartDate").setText(String.valueOf(userBdd.getRightStartDate())));
-			user.addContent(new Element("rightEndDate").setText(String.valueOf(userBdd.getRightEndDate())));
 
-			doc.getRootElement().addContent(user);
 
-			XMLOutputter xmlOutput = new XMLOutputter();
-			xmlOutput.setFormat(Format.getPrettyFormat());
-			xmlOutput.output(doc, new FileWriter(xmlFile));
-			
-			userResponse = getUsers();
-			
-			// indicate the first insertion
-			if (fistInsert) {
-				userResponse.setResponseCode(StatusCode.COD_10.getCode());
-				userResponse.setResponseError("New file " + xmlFile + " is created !");
-			} else {
-				userResponse.setResponseCode(StatusCode.CODE_3.getCode());
-				userResponse.setResponseError("User " + userBdd.getLogin() + " is created !");
-			}
-			
 		} catch (IOException io) {
 			io.printStackTrace();
 			userResponse = new UserResponse();
@@ -124,8 +133,8 @@ public class UserREST {
 	 * 			the user with elements to update
 	 * @return
 	 */
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public UserResponse updateUser(@RequestBody final User userBdd, @PathVariable(value = "id") final Integer userId) {
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public UserResponse updateUser(@RequestBody final User userBdd) {
 
 		UserResponse userResponse = null;
 		Document doc = null;
@@ -138,6 +147,11 @@ public class UserREST {
 			if (!file.exists()) {
 				userResponse = new UserResponse();
 				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
+				userResponse.setResponseError(StatusCode.CODE_103.getDescription()); 
+			} else if (!checkField(userBdd)) {
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_104.getCode());
+				userResponse.setResponseError(StatusCode.CODE_104.getDescription()); 			
 			} else {
 
 				// get the current xml file
@@ -150,7 +164,7 @@ public class UserREST {
 
 				// remove the element passing in parameter
 				for (int i=0 ; i < listUsers.size(); i++) {
-					if (listUsers.get(i).getAttributeValue("id").equals(String.valueOf(userId))) {
+					if (listUsers.get(i).getAttributeValue("id").equals(String.valueOf(userBdd.getUserId()))) {
 						updateUser(userBdd, doc, listUsers.get(i));
 						break;
 					}
@@ -193,6 +207,11 @@ public class UserREST {
 			if (!file.exists()) {
 				userResponse = new UserResponse();
 				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
+				userResponse.setResponseError(StatusCode.CODE_103.getDescription()); 
+			} else if (userId == null || userId == 0) {
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_104.getCode());
+				userResponse.setResponseError(StatusCode.CODE_104.getDescription()); 								
 			} else {
 
 				// get the current xml file
@@ -289,7 +308,7 @@ public class UserREST {
 	 * @param element
 	 * 		the current element
 	 */
-	private void updateUser(User userToUpdate, Document doc, Element element) {
+	private void updateUser(final User userToUpdate, final Document doc, final Element element) {
 		try {
 			element.getChild("login").setText(userToUpdate.getLogin());
 			element.getChild("password").setText(userToUpdate.getPassword());
@@ -304,6 +323,24 @@ public class UserREST {
 		} catch (IOException io) {
 			io.printStackTrace();
 		}		
+	}
+
+	/**
+	 * Check if fields received of front are not empty or null
+	 * @param user
+	 * 		the current user
+	 * @return boolean to indicate if ok or not
+	 */
+	private boolean checkField(final User user) {
+		if (StringUtils.isNotBlank(user.getLogin()) ||
+				StringUtils.isNotBlank(user.getPassword()) ||
+				user.getRightStartDate() != null || 
+				user.getRightEndDate() != null || 
+				user.getRight() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

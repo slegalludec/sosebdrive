@@ -44,9 +44,14 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 		userBdd.right = $scope.selectedRight.id;
 		UserRestSvc.userAdd.add(userBdd, 
 			function(response) {
-				LoggerSvc.log('success add user');
-				$scope.users = response.usersList;
-				resetFields();
+				if (response.responseCode == '104') {
+					LoggerSvc.log('error add : ' + response.responseCode, 'w');
+					$scope.initList();
+				} else {
+					LoggerSvc.log('success add user');
+					$scope.users = response.usersList;
+					resetFields();
+				}
 			},
 			function(response) {
 				LoggerSvc.log('error add user[login=' + userBdd.login + '] : ' + response.data.status, 'e');
@@ -59,11 +64,16 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 */
 	$scope.update = function(userBdd) {
 		userBdd.right = $scope.selectedRight.id;
-		UserRestSvc.userUpdate.update(userBdd, {id:userBdd.userId}, 
-			function(response) {
-				LoggerSvc.log('success update user');
-				$scope.users = response.usersList;
-				resetFields();
+		UserRestSvc.userUpdate.update(userBdd, 
+			function(response) {			
+				if (response.responseCode == '104') {
+					LoggerSvc.log('error update : ' + response.responseCode, 'w');
+					$scope.initList();
+				} else {
+					LoggerSvc.log('success update user');
+					$scope.users = response.usersList;
+					resetFields();
+				}
 			},
 			function(response) {
 				LoggerSvc.log('error update user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');

@@ -10,8 +10,8 @@ app.factory('UserRestSvc', ['$resource', function($resource) {
 		userAdd : $resource('/user/create', {}, {
 			add: {method:'POST'},
 		}), 
-		userUpdate : $resource('/user/update/:id', {}, {
-			update: {method:'PUT', isArray:false, params: { id: '@id'}},
+		userUpdate : $resource('/user/update', {}, {
+			update: {method:'PUT'},
 		})
 	}
 	

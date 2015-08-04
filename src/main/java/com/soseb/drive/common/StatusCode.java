@@ -12,6 +12,7 @@ public enum StatusCode {
 	CODE_101(101, "bad login or bad password"),
 	CODE_102(102, "user right expired"),
 	CODE_103(103, "authentication file not founded !"),
+	CODE_104(104, "fields are empty or null"),
 	CODE_110(110, "unknow error"),
 	CODE_111(111, "ws error");
 
