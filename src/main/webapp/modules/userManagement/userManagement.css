@@ -209,3 +209,11 @@
     background-color: gray;
     color: white;
 }
+
+.alert {
+	position: absolute;
+    width: 310px;
+    top: 410px;
+    left: 740px;
+    text-align: center;
+}

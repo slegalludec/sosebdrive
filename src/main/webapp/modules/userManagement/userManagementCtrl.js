@@ -3,6 +3,7 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	$scope.isCreationMode = true;
 	$scope.userBdd = {};
 	$scope.buttons = 'buttonsOnly';
+	$scope.msg = '';
 
 	/* current language */
 	var language =  $translate.use();
@@ -21,7 +22,7 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 
 	/* right selected by default */
 	$scope.selectedRight = $scope.rights[1];
-
+	
 	/**
 	 * Init users list
 	 */
@@ -47,10 +48,14 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 				if (response.responseCode == '104') {
 					LoggerSvc.log('error add : ' + response.responseCode, 'w');
 					$scope.initList();
+					$scope.classCSS = 'alert-warning';
+					$scope.msg = response.responseError;
 				} else {
 					LoggerSvc.log('success add user');
 					$scope.users = response.usersList;
 					resetFields();
+					$scope.classCSS = 'alert-info';
+					$scope.msg = response.responseError;
 				}
 			},
 			function(response) {
@@ -69,10 +74,14 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 				if (response.responseCode == '104') {
 					LoggerSvc.log('error update : ' + response.responseCode, 'w');
 					$scope.initList();
+					$scope.classCSS = 'alert-warning';
+					$scope.msg = response.responseError;
 				} else {
 					LoggerSvc.log('success update user');
 					$scope.users = response.usersList;
 					resetFields();
+					$scope.classCSS = 'alert-info';
+					$scope.msg = response.responseError;
 				}
 			},
 			function(response) {
@@ -90,6 +99,8 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 				LoggerSvc.log('success remove user');
 				$scope.users = response.usersList;
 				resetFields();
+				$scope.classCSS = 'alert-info';
+				$scope.msg = response.responseError;
 			},
 			function(response) {
 				LoggerSvc.log('error remove user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
