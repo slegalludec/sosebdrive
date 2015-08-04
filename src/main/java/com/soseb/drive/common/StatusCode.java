@@ -13,6 +13,7 @@ public enum StatusCode {
 	CODE_102(102, "user right expired"),
 	CODE_103(103, "authentication file not founded !"),
 	CODE_104(104, "fields are empty or null"),
+	CODE_105(105, "error during removed element"),
 	CODE_110(110, "unknow error"),
 	CODE_111(111, "ws error");
 

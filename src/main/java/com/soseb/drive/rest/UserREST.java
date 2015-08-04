@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -199,7 +200,9 @@ public class UserREST {
 
 		UserResponse userResponse = null;
 		Document doc = null;
+		Element rootNode = null;
 		File file = new File(xmlFile);
+		boolean isRemoved = false;
 
 		try {
 
@@ -217,15 +220,35 @@ public class UserREST {
 				// get the current xml file
 				SAXBuilder builder = new SAXBuilder();		 
 				doc = (Document) builder.build(file);
+				rootNode = doc.getRootElement();
 
-				/**@SuppressWarnings("deprecation")
-				XPath xpath = XPath.newInstance("//users-group/user[@id=" + userId + "]");
-				@SuppressWarnings("deprecation")
-				Element el = (Element) xpath.selectSingleNode(doc);*/
+				// get the last id
+				List<Element> listUsers = rootNode.getChildren("user");
+				Iterator<Element> itr = listUsers.iterator();
+
+				while (itr.hasNext()) {
+					Element child = (Element) itr.next();
+					String att = child.getAttributeValue("id"); 
+					if( Integer.parseInt(att) == userId){
+						itr.remove();
+						isRemoved = true;
+						break;
+					}
+				}
+
+				XMLOutputter xmlOutput = new XMLOutputter();
+				xmlOutput.setFormat(Format.getPrettyFormat());
+
+				xmlOutput.output(doc, new FileWriter(xmlFile));
 
 				userResponse = getUsers();
-				userResponse.setResponseCode(StatusCode.CODE_5.getCode());
-				userResponse.setResponseError("User with id " + userId + " is removed !");
+				if (isRemoved) {					
+					userResponse.setResponseCode(StatusCode.CODE_5.getCode());
+					userResponse.setResponseError("User with id " + userId + " is removed !");
+				} else {
+					userResponse.setResponseCode(StatusCode.CODE_105.getCode());
+					userResponse.setResponseError(StatusCode.CODE_105.getDescription());
+				}
 			}
 
 		} catch (IOException io) {
