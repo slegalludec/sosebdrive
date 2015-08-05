@@ -67,7 +67,7 @@ var app = angular.module('sosebDrive', ['pascalprecht.translate', 'ngResource', 
 
 /* translate configuration */
 /* routing configuration */
-app.config(function($translateProvider, $routeProvider) {
+app.config(function($translateProvider, $routeProvider, $httpProvider) {
 
     for(lang in translations){
         $translateProvider.translations(lang, translations[lang]);
@@ -75,6 +75,8 @@ app.config(function($translateProvider, $routeProvider) {
 
     $translateProvider.preferredLanguage('en');
 
+    $httpProvider.interceptors.push('AuthenticationInterceptor');
+    
     $routeProvider
         .when('/mainPage', {
         templateUrl: 'templates/mainPage.html'

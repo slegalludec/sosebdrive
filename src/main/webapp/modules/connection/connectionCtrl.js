@@ -14,6 +14,10 @@ app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', 'Connecti
 				function(response) {
 					if (response.responseCode == 1) {
 						LoggerSvc.log('success connect');
+						
+						// Update user response in scope
+						
+						
 						$location.path('/mainPage');
 					} else {
 						LoggerSvc.log('error connect : [code=' + response.responseCode + ']', 'e');
