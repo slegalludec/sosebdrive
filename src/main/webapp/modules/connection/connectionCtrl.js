@@ -4,8 +4,6 @@ app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', 'Connecti
 	$scope.errorMsg = {};
 	$scope.error = false;
 
-	$scope.mock = false;
-
 	/**
 	 * Connect to the application
 	 * @param connection
@@ -14,7 +12,14 @@ app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', 'Connecti
 		if (connectionForm.$valid) {
 			ConnectionRestSvc.connection.connect(connection,
 				function(response) {
-					LoggerSvc.log('success connect');
+					if (response.responseCode == 1) {
+						LoggerSvc.log('success connect');
+						$location.path('/mainPage');
+					} else {
+						LoggerSvc.log('error connect : [code=' + response.responseCode + ']', 'e');
+						$scope.errorMsg = 'ERROR_MSG_' + response.responseCode;
+						$scope.error = true;
+					}				
 				},
 				function(response) {
 					LoggerSvc.log('error connect : ' + response.data.status, 'e');

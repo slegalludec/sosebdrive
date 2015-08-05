@@ -26,7 +26,9 @@ var translations = {
         'ERROR_MSG_100' : 'login or password empty',
         'ERROR_MSG_101' : 'bad login or bad password',
         'ERROR_MSG_102' : 'user right expired',
-        'ERROR_MSG_110' : 'unknow error'
+        'ERROR_MSG_103' : 'authentication file is not founded',
+        'ERROR_MSG_110' : 'unknow error',
+        'ERROR_MSG_111' : 'ws error'
     },
     'fr' : {
         'LOGIN': 'identifiant',
@@ -55,7 +57,9 @@ var translations = {
         'ERROR_MSG_100' : 'login ou mot de passe vide',
         'ERROR_MSG_101' : 'mauvais login ou mauvais mot de passe',
         'ERROR_MSG_102' : 'droit utilisateur expiré',
-        'ERROR_MSG_110' : 'erreur inconnue'
+        'ERROR_MSG_103' : 'fichier authentification non trouvé',
+        'ERROR_MSG_110' : 'erreur inconnue',
+        'ERROR_MSG_111' : 'erreur ws'
     }
 };
 
