@@ -13,7 +13,7 @@
 
         <span class="error errorPosition" ng-if="error">{{ errorMsg | translate}}</span>
 
-        <button class="btn connectionBtn" ng-click="connect(connectionForm)" ng-disabled="!connectionForm.$valid">{{'CONNECTION' | translate}}</button>
+        <button class="btn connectionBtn" ng-click="connect(connectionForm, connection)" ng-disabled="!connectionForm.$valid">{{'CONNECTION' | translate}}</button>
     </form>
 
     <div class="flag">

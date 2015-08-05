@@ -2,6 +2,8 @@ package com.soseb.drive.responses;
 
 import java.io.Serializable;
 
+import com.soseb.drive.session.UserSession;
+
 /**
  * Connection response
  * @author slegalludec
@@ -20,14 +22,14 @@ public class ConnectionResponse implements Serializable {
 	private int responseCode;
 	
 	/**
-	 * user id
+	 * user session
 	 */
-	private int userId;
+	private UserSession userSession;
 	
 	/**
-	 * user trackid
+	 * response error
 	 */
-	private String trackid;
+	private String responseError;
 
 	/**
 	 * @return the responseCode
@@ -42,33 +44,33 @@ public class ConnectionResponse implements Serializable {
 	public void setResponseCode(int responseCode) {
 		this.responseCode = responseCode;
 	}
-
-	/**
-	 * @return the userId
-	 */
-	public int getUserId() {
-		return userId;
-	}
-
-	/**
-	 * @param userId the userId to set
-	 */
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * @return the trackid
-	 */
-	public String getTrackid() {
-		return trackid;
-	}
-
-	/**
-	 * @param trackid the trackid to set
-	 */
-	public void setTrackid(String trackid) {
-		this.trackid = trackid;
-	}
 	
+	/**
+	 * @return the userSession
+	 */
+	public UserSession getUserSession() {
+		return userSession;
+	}
+
+	/**
+	 * @param userSession the userSession to set
+	 */
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
+	}
+
+	/**
+	 * @return the responseError
+	 */
+	public String getResponseError() {
+		return responseError;
+	}
+
+	/**
+	 * @param responseError the responseError to set
+	 */
+	public void setResponseError(String responseError) {
+		this.responseError = responseError;
+	}
+		
 }

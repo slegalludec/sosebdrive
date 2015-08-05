@@ -1,38 +1,34 @@
-app.controller('ConnectionCtrl', ['$translate', '$scope', '$location',  function ($translate, $scope, $location){
+app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, ConnectionRestSvc, LoggerSvc){
 
-    $scope.connection = {};
-    $scope.errorMsg = {};
-    $scope.error = false;
+	$scope.connection = {};
+	$scope.errorMsg = {};
+	$scope.error = false;
 
-    $scope.mock = false;
+	$scope.mock = false;
 
-    /**
-     * Manage xhr connection
-     */
-    $scope.connect = function(connection) {
-        if (connection.$valid) {
-            console.log("xhr");
+	/**
+	 * Connect to the application
+	 * @param connection
+	 */
+	$scope.connect = function(connectionForm, connection) {
+		if (connectionForm.$valid) {
+			ConnectionRestSvc.connection.connect(connection,
+				function(response) {
+					LoggerSvc.log('success connect');
+				},
+				function(response) {
+					LoggerSvc.log('error connect : ' + response.data.status, 'e');
+			});
+		}
+	};
 
-            if($scope.mock) {
-                $scope.error = true;
-                $scope.errorMsg = 'ERROR_MSG_102';
-            } else {
-                $location.path('/mainPage');
-            }
-
-        } else {
-            $scope.error = true;
-            console.log("error");
-        }
-    };
-
-    /**
-     * Manage language change
-     * @param key
-     */
-    $scope.changeLanguage = function (key) {
-        $translate.use(key);
-        $location.path('/');
-    };
+	/**
+	 * Manage language change
+	 * @param key
+	 */
+	$scope.changeLanguage = function (key) {
+		$translate.use(key);
+		$location.path('/');
+	};
 
 }]);

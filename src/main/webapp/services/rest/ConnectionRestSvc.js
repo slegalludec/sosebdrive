@@ -1,6 +1,12 @@
 app.factory('ConnectionRestSvc', ['$resource', function($resource) {
-  return $resource('/authentication', null, {
-	  connection : {method : 'POST', url: '/authentication/connection'},
-	  disconnection : {method: 'POST', url: '/authentication/disconnection'}
-  });
+	
+	var factory = {
+		connection : $resource('/authentication/connection', {}, {
+			connect: {method:'POST'}
+		}),
+		disconnection : $resource('/authentication/disconnection', {}, {
+			disconnect: {method:'POST'}
+		})
+	}
+	return factory;
 }]);

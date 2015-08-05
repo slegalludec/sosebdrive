@@ -2,14 +2,14 @@ app.directive('alertTimeout', function ($timeout) {
     return {
         restrict: 'E',
         scope: {
-            type: '=',
-            textValue: '='
+        	classCSS: '=',
+        	msg: '='
         },
-        template: '<alert type="alertTimeout">textValue</alert>',
+        templateUrl: 'modules/alertTimeout/alertTimeout.html',
         link: function(scope, element, attrs) {
             $timeout(function () {
                 element.remove();
-            }, 100000);
+            }, 15000);
         }
     };
 });
