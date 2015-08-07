@@ -1,22 +1,26 @@
-app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, ConnectionRestSvc, LoggerSvc){
+app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$rootScope', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, $rootScope, ConnectionRestSvc, LoggerSvc){
 
-	$scope.connection = {};
+	$scope.credentials = {};
 	$scope.errorMsg = {};
 	$scope.error = false;
+	$scope.user = {};
 
 	/**
 	 * Connect to the application
 	 * @param connection
 	 */
-	$scope.connect = function(connectionForm, connection) {
+	$scope.connect = function(connectionForm, credentials) {
 		if (connectionForm.$valid) {
-			ConnectionRestSvc.connection.connect(connection,
+			ConnectionRestSvc.connection.connect(credentials,
 				function(response) {
 					if (response.responseCode == 1) {
 						LoggerSvc.log('success connect');
 						
 						// Update user response in scope
-						
+						$rootScope.userId = response.userSession.userId;
+						$rootScope.login = response.userSession.login;
+						$rootScope.right = response.userSession.right;
+						$rootScope.trackid = response.userSession.trackid;
 						
 						$location.path('/mainPage');
 					} else {
@@ -31,6 +35,8 @@ app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', 'Connecti
 		}
 	};
 
+	
+	
 	/**
 	 * Manage language change
 	 * @param key

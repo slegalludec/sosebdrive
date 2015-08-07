@@ -75,7 +75,12 @@ app.config(function($translateProvider, $routeProvider, $httpProvider) {
 
     $translateProvider.preferredLanguage('en');
 
-    $httpProvider.interceptors.push('AuthenticationInterceptor');
+    $httpProvider.interceptors.push([
+        '$injector',
+        function ($injector) {
+    	    return $injector.get('AuthenticationInterceptor');
+        }
+    ]);
     
     $routeProvider
         .when('/mainPage', {

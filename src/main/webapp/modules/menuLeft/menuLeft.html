@@ -22,11 +22,11 @@
         </div>
     </div>
 
-    <div class="headerItem headerAdm">
+    <div ng-if="isAdmin == 1" class="headerItem headerAdm">
         <span>{{'ADMINISTRATION' | translate}}</span>
     </div>
 
-    <div class="administration">
+    <div ng-if="isAdmin == 1" class="administration">
         <span class="glyphicon glyphicon-cog" aria-hidden="true"> </span>
         <a href="#userManagementPage">{{'ADMIN' | translate}}</a>
     </div>

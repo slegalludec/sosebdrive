@@ -15,7 +15,8 @@ public enum StatusCode {
 	CODE_104(104, "fields are empty or null"),
 	CODE_105(105, "error during removed element"),
 	CODE_110(110, "unknow error"),
-	CODE_111(111, "ws error");
+	CODE_111(111, "ws error"),
+	CODE_112(112, "trackid is invalid");
 
 	/**
 	 * status code

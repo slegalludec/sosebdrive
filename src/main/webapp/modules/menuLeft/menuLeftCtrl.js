@@ -1,4 +1,4 @@
-app.controller('MenuCtrl', ['$translate', '$scope', '$location',  function ($translate, $scope, $location){
+app.controller('MenuCtrl', ['$translate', '$scope', '$location', '$rootScope', function ($translate, $scope, $location, $rootScope){
 
     /*$scope.folders = {
         "code": "1",
@@ -8,7 +8,7 @@ app.controller('MenuCtrl', ['$translate', '$scope', '$location',  function ($tra
                 "range": "1",
                 "filesList": [
                     {
-                        "documentName": "Réservation",
+                        "documentName": "Rï¿½servation",
                         "range": "1",
                         "documentUrl": "http://www.google.fr"
                     },
@@ -50,7 +50,7 @@ app.controller('MenuCtrl', ['$translate', '$scope', '$location',  function ($tra
                 "showSubMenu": false,
                 "folderList": [
                     {
-                        "documentName": "Pièces à fournir",
+                        "documentName": "Piï¿½ces ï¿½ fournir",
                         "range": "1",
                         "showSubMenu": false,
                         "folderList": [
@@ -118,6 +118,8 @@ app.controller('MenuCtrl', ['$translate', '$scope', '$location',  function ($tra
 
     $scope.displaySubMenu1 = false;
     $scope.subMenu1 = {};
+    
+    $scope.isAdmin = $rootScope.right;
 
     $scope.openSubMenu1 = function(folder) {
         if (folder.showSubMenu == true) {

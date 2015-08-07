@@ -1,4 +1,4 @@
-app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'LoggerSvc', function ($scope, $translate, UserRestSvc, LoggerSvc){
+app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'LoggerSvc', '$rootScope', function ($scope, $translate, UserRestSvc, LoggerSvc, $rootScope){
 
 	$scope.isCreationMode = true;
 	$scope.userBdd = {};
@@ -22,19 +22,19 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 
 	/* right selected by default */
 	$scope.selectedRight = $scope.rights[1];
-	
+
 	/**
 	 * Init users list
 	 */
 	$scope.initList = function() {
 		UserRestSvc.usersList.list(
-			function(response) {
-				LoggerSvc.log('success list user');
-				$scope.users = response.usersList;
-			},
-			function(response) {
-				LoggerSvc.log('error list user : ' + response.data.status, 'e');
-		});
+				function(response) {
+					LoggerSvc.log('success list user');
+					$scope.users = response.usersList;
+				},
+				function(response) {
+					LoggerSvc.log('error list user : ' + response.data.status, 'e');
+				});
 	}
 
 	/**
@@ -44,22 +44,22 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	$scope.add = function(userBdd) {
 		userBdd.right = $scope.selectedRight.id;
 		UserRestSvc.userAdd.add(userBdd, 
-			function(response) {
-				if (response.responseCode == '104') {
-					LoggerSvc.log('error add : ' + response.responseCode, 'w');
-					$scope.initList();
-					$scope.classCSS = 'alert-warning';
-					$scope.msg = response.responseError;
-				} else {
-					LoggerSvc.log('success add user');
-					$scope.users = response.usersList;
-					resetFields();
-					$scope.classCSS = 'alert-info';
-					$scope.msg = response.responseError;
-				}
-			},
-			function(response) {
-				LoggerSvc.log('error add user[login=' + userBdd.login + '] : ' + response.data.status, 'e');
+				function(response) {
+			if (response.responseCode == '104') {
+				LoggerSvc.log('error add : ' + response.responseCode, 'w');
+				$scope.initList();
+				$scope.classCSS = 'alert-warning';
+				$scope.msg = response.responseError;
+			} else {
+				LoggerSvc.log('success add user');
+				$scope.users = response.usersList;
+				resetFields();
+				$scope.classCSS = 'alert-info';
+				$scope.msg = response.responseError;
+			}
+		},
+		function(response) {
+			LoggerSvc.log('error add user[login=' + userBdd.login + '] : ' + response.data.status, 'e');
 		});
 	};
 
@@ -70,22 +70,22 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	$scope.update = function(userBdd) {
 		userBdd.right = $scope.selectedRight.id;
 		UserRestSvc.userUpdate.update(userBdd, 
-			function(response) {			
-				if (response.responseCode == '104') {
-					LoggerSvc.log('error update : ' + response.responseCode, 'w');
-					$scope.initList();
-					$scope.classCSS = 'alert-warning';
-					$scope.msg = response.responseError;
-				} else {
-					LoggerSvc.log('success update user');
-					$scope.users = response.usersList;
-					resetFields();
-					$scope.classCSS = 'alert-info';
-					$scope.msg = response.responseError;
-				}
-			},
-			function(response) {
-				LoggerSvc.log('error update user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
+				function(response) {			
+			if (response.responseCode == '104') {
+				LoggerSvc.log('error update : ' + response.responseCode, 'w');
+				$scope.initList();
+				$scope.classCSS = 'alert-warning';
+				$scope.msg = response.responseError;
+			} else {
+				LoggerSvc.log('success update user');
+				$scope.users = response.usersList;
+				resetFields();
+				$scope.classCSS = 'alert-info';
+				$scope.msg = response.responseError;
+			}
+		},
+		function(response) {
+			LoggerSvc.log('error update user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
 		});
 	};
 
@@ -94,17 +94,25 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.remove = function(userBdd) {
-		UserRestSvc.userRemove.remove({id:userBdd.userId}, 
+		UserRestSvc.userRemove.remove({id:userBdd.userId, trackid : $rootScope.trackid}, 
 			function(response) {
-				LoggerSvc.log('success remove user');
-				$scope.users = response.usersList;
-				resetFields();
-				$scope.classCSS = 'alert-info';
-				$scope.msg = response.responseError;
+
+				if (response.responseCode == 1) {
+					LoggerSvc.log('success remove user');
+					$scope.users = response.usersList;
+					resetFields();
+				} else if(response.responseCode == 112) {
+					$location.path('/error');
+				} else {
+					LoggerSvc.log('error connect : [code=' + response.responseCode + ']', 'e');
+					$scope.classCSS = 'alert-info';
+					$scope.msg = response.responseError;
+				}				
+
 			},
 			function(response) {
 				LoggerSvc.log('error remove user[id=' + userBdd.userId + '] : ' + response.data.status, 'e');
-		});
+			});
 	};
 
 	/**
@@ -133,7 +141,7 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 		$scope.userBdd = {};
 		$scope.buttons = 'buttonsOnly';
 	}
-	
+
 	/**
 	 * reset fields value
 	 */

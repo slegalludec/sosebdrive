@@ -3,17 +3,17 @@
 
         <div class="login">
             <label id="labelLogin">{{'LOGIN' | translate}}:</label>
-            <input id="inputLogin" type="text" ng-model="connection.login" required/>
+            <input id="inputLogin" type="text" ng-model="credentials.login" required/>
         </div>
 
         <div class="password">
             <label id="labelPassword">{{'PASSWORD' | translate}}:</label>
-            <input id="inputPassword" type="password" ng-model="connection.password" required/>
+            <input id="inputPassword" type="password" ng-model="credentials.password" required/>
         </div>
 
         <span class="error errorPosition" ng-if="error">{{ errorMsg | translate}}</span>
 
-        <button class="btn connectionBtn" ng-click="connect(connectionForm, connection)" ng-disabled="!connectionForm.$valid">{{'CONNECTION' | translate}}</button>
+        <button class="btn connectionBtn" ng-click="connect(connectionForm, credentials)" ng-disabled="!connectionForm.$valid">{{'CONNECTION' | translate}}</button>
     </form>
 
     <div class="flag">

@@ -16,15 +16,15 @@
 
 	<!-- Parent controller -->
     <script src="app.js"></script>
+    
+    <!-- Interceptors -->
+	<script type="application/javascript" src="services/interceptors/AuthenticationInterceptor.js"></script>
 
 	<!-- Services -->
     <script type="application/javascript" src="services/log/LoggerSvc.js"></script>
     <script type="application/javascript" src="services/rest/DriveRestSvc.js"></script>
     <script type="application/javascript" src="services/rest/UserRestSvc.js"></script>
     <script type="application/javascript" src="services/rest/ConnectionRestSvc.js"></script>
-    
-    <!-- Interceptors -->
-	<script type="application/javascript" src="services/interceptors/AuthenticationInterceptor.js"></script>
 
     <!-- Controllers -->
     <script type="application/javascript" src="modules/picture/pictureCtrl.js"></script>
@@ -60,8 +60,6 @@
   </head>
 
   <body class="landscape">
-
-
 
     <div id="main">
         <!--<alert-timeout type="warning" textValue="{{'DISCONNECT' | translate}}"></alert-timeout>-->

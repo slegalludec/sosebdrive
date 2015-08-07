@@ -14,4 +14,14 @@ public class TrackidUtils {
 		return new BigInteger(130, random).toString(16);
 	}
 	
+	/**
+	 * Test if trackid is valid or not
+	 * @param userTrackid the trackid of user session
+	 * @param receivedTrackid the trackid received to frontend
+	 * @return boolean of comparison
+	 */
+	public static boolean trackidIsValid(final String userTrackid, final String receivedTrackid) {		
+		return receivedTrackid.equals(userTrackid);		
+	}
+	
 }
