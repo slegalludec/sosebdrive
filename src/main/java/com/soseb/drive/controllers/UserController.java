@@ -16,7 +16,6 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.soseb.drive.common.StatusCode;
 import com.soseb.drive.constants.NasConstants;
@@ -34,7 +33,7 @@ public class UserController {
 	 * 			the user with elements to create
 	 * @return
 	 */
-	public UserResponse create(@RequestBody final User userBdd) {
+	public UserResponse create(final User userBdd) {
 
 		UserResponse userResponse = null;
 		Document doc = null;
@@ -129,7 +128,7 @@ public class UserController {
 	 * 			the user with elements to update
 	 * @return
 	 */
-	public UserResponse update(@RequestBody final User userBdd) {
+	public UserResponse update(final User userBdd) {
 
 		UserResponse userResponse = null;
 		Document doc = null;
@@ -189,7 +188,7 @@ public class UserController {
 	 * 			the user id
 	 * @return
 	 */
-	public UserResponse delete(final Integer userId, final String trackid) {
+	public UserResponse delete(final Integer userId) {
 
 		UserResponse userResponse = null;
 

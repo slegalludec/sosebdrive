@@ -1,4 +1,4 @@
-app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'LoggerSvc', 'RedirectSvc', '$rootScope', '$location', function ($scope, $translate, UserRestSvc, LoggerSvc, RedirectSvc, $rootScope, $location){
+app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'LoggerSvc', 'RedirectSvc', '$rootScope', '$location', '$window', function ($scope, $translate, UserRestSvc, LoggerSvc, RedirectSvc, $rootScope, $location, $window){
 
 	$scope.isCreationMode = true;
 	$scope.userBdd = {};
@@ -16,6 +16,9 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	$scope.inputEndDate = 'inputEndDate_' + language;
 	$scope.positionLogin = 'inputLoginEn';
 	$scope.positionPassword = 'inputPasswordEn';
+	
+	$scope.showTop = false;
+	$scope.showBottom = false;
 
 	/* rights list */
 	$scope.rights = [{ 'id' : 1, 'label' : 'administrator' }, { 'id' : 2, 'label' : 'simple user' }];
@@ -43,7 +46,7 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.add = function(userBdd) {		
-		if ($rootScope.right == undefined) {
+		if (JSON.parse(sessionStorage.getItem($window.sessionStorage.login)).right == undefined) {
 			LoggerSvc.log('error add user[login=' + userBdd.login + '] : 401', 'e');
 			RedirectSvc.redirect();
 		} else {
@@ -76,7 +79,7 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.update = function(userBdd) {
-		if ($rootScope.right == undefined) {
+		if (JSON.parse(sessionStorage.getItem($window.sessionStorage.login)).right == undefined) {
 			LoggerSvc.log('error update user[login=' + userBdd.login + '] : 401', 'e');
 			$location.path('/error');
 		} else {
@@ -107,7 +110,7 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 	 * @param userBdd
 	 */
 	$scope.remove = function(userBdd) {
-		if ($rootScope.right == undefined) {
+		if (JSON.parse(sessionStorage.getItem($window.sessionStorage.login)).right == undefined) {
 			LoggerSvc.log('error remove user[id=' + userBdd.userId + '] : 401', 'e');
 			$location.path('/error');
 		} else {
@@ -160,6 +163,28 @@ app.controller('UserManagementCtrl', ['$scope', '$translate', 'UserRestSvc', 'Lo
 		$scope.buttons = 'buttonsOnly';
 	}
 
+	/**
+	 * Display or not the calendar top
+	 */
+	$scope.showCalendarTop = function(state) {
+		if (state) {
+			$scope.showTop = false;
+		} else {
+			$scope.showTop == true;
+		}
+	}
+	
+	/**
+	 * Display or not the calendar top
+	 */
+	$scope.showCalendarBottom = function(state) {
+		if (state) {
+			$scope.showBottom = false;
+		} else {
+			$scope.showBottom == true;
+		}
+	}
+	
 	/**
 	 * reset fields value
 	 */

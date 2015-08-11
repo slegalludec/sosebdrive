@@ -1,17 +1,17 @@
 app.factory('UserRestSvc', ['$resource', function($resource) {
 	
 	var factory = {
-		usersList : $resource('/user/list/:trackid', {}, {
-			list: {method:'GET', isArray:false, params: { trackid : '@trackid'}},
+		usersList : $resource('/user/list', {}, {
+			list: {method:'GET', isArray:false},
 		}),
-		userRemove : $resource('/user/delete/:id/:trackid', {}, {
-			remove: {method:'DELETE', isArray:false, params: { id: '@id', trackid : '@trackid'}},
+		userRemove : $resource('/user/delete/:id', {}, {
+			remove: {method:'DELETE', isArray:false, params: { id: '@id'}},
 		}),
-		userAdd : $resource('/user/create/:trackid', {}, {
-			add: {method:'POST', params: { trackid : '@trackid'}},
+		userAdd : $resource('/user/create', {}, {
+			add: {method:'POST'},
 		}), 
-		userUpdate : $resource('/user/update/:trackid', {}, {
-			update: {method:'PUT', params: { trackid : '@trackid'}},
+		userUpdate : $resource('/user/update', {}, {
+			update: {method:'PUT'},
 		})
 	}
 	

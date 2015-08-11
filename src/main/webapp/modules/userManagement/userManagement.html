@@ -2,14 +2,6 @@
 
 	<div class="usersListHeader">{{'TITLE_MANAGEMENT' | translate}}</div>
 
-	<alert-timeout ng-if="msg != ''" classCSS="classCSS" msg="msg"></alert-timeout>
-
-	<!-- <div ng-if="msg != ''" class="alert" ng-class="classCSS" role="alert">
-		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-		{{msg}}
-	</div>
-	 -->
-
 	<div class="usersTitle">{{'TITLE_USERS' | translate}}</div>
 	<div class="usersList">
 		<ul class="list-group">
@@ -40,20 +32,15 @@
 			</div>
 
 			<div class="startDate">
-				<!-- <datepicker-perso nameLabel="{{'START_DATE' | translate}}:" model="userBdd.rightStartDate" classInput="inputStartDate" classCalendar="calendarTop"></datepicker-perso> -->
-
-				<label>{{'START_DATE' | translate}}:</label> <input
-					ng-class="inputStartDate" type="text"
-					ng-model="userBdd.rightStartDate"
-					placeholder="{{'PATTERN_DATE' | translate}}" required>
+				<label>{{'START_DATE' | translate}}:</label>
+				<input ng-class="inputStartDate" ng-model="userBdd.rightStartDate" required placeholder="{{'PATTERN_DATE' | translate}}"></input>
+				<!-- <span ng-if="top" class="datepicker_pos_top" pickadate ng-model="userBdd.rightStartDate" format="{{'PATTERN_DATE' | translate}}"></span> -->
 			</div>
 
 			<div class="endDate">
-				<!-- <datepicker-perso nameLabel="{{'END_DATE' | translate}}:" model="userBdd.rightEndDate" classInput="inputEndDate" classCalendar="calendarBottom"></datepicker-perso> -->
-
-				<label>{{'END_DATE' | translate}}:</label> <input
-					ng-class="inputEndDate" type="text" ng-model="userBdd.rightEndDate"
-					placeholder="{{'PATTERN_DATE' | translate}}" required />
+				<label>{{'END_DATE' | translate}}:</label>
+				<input ng-class="inputEndDate" ng-model="userBdd.rightEndDate" required placeholder="{{'PATTERN_DATE' | translate}}"></input>
+				<!-- <div ng-if="bottom" class="datepicker_pos_bottom" pickadate ng-model="userBdd.rightEndDate" format="{{'PATTERN_DATE' | translate}}"></div> -->
 			</div>
 
 			<div class="userRight">

@@ -22,7 +22,7 @@ var translations = {
         'BUTTON_REMOVE_USER' : 'remove',
         'BUTTON_CANCEL_USER' : 'Cancel',
 
-        'PATTERN_DATE' : 'dd/MM/yyyy hh:mm',
+        'PATTERN_DATE' : 'MM/dd/yyyy',
 
         'ERROR_MSG_100' : 'login or password empty',
         'ERROR_MSG_101' : 'bad login or bad password',
@@ -54,7 +54,7 @@ var translations = {
         'BUTTON_REMOVE_USER' : 'Supprimer',
         'BUTTON_CANCEL_USER' : 'Annuler',
 
-        'PATTERN_DATE' : 'dd/MM/yyyy hh:mm',
+        'PATTERN_DATE' : 'dd/MM/yyyy',
 
         'ERROR_MSG_100' : 'login ou mot de passe vide',
         'ERROR_MSG_101' : 'mauvais login ou mauvais mot de passe',
@@ -65,7 +65,7 @@ var translations = {
     }
 };
 
-var app = angular.module('sosebDrive', ['pascalprecht.translate', 'ngResource', 'ngRoute', 'ui.bootstrap']);
+var app = angular.module('sosebDrive', ['pascalprecht.translate', 'ngResource', 'ngRoute', 'ui.bootstrap', 'pickadate']);
 
 /* translate configuration */
 /* routing configuration */

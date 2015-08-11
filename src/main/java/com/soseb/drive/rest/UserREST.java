@@ -48,9 +48,9 @@ public class UserREST {
 	 * 			the user id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete/{id}/{trackid}", method = RequestMethod.DELETE)
-	public UserResponse deleteUser(@PathVariable(value = "id") final Integer userId, @PathVariable(value = "trackid") final String trackid) {
-		return userCtrl.delete(userId, trackid);
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public UserResponse deleteUser(@PathVariable(value = "id") final Integer userId) {
+		return userCtrl.delete(userId);
 	}
 
 	/**
