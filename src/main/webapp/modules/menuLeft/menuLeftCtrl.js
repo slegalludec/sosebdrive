@@ -1,48 +1,6 @@
-app.controller('MenuCtrl', ['$translate', '$scope', '$location', '$rootScope', function ($translate, $scope, $location, $rootScope){
+app.controller('MenuCtrl', ['$translate', '$scope', '$location', '$window', function ($translate, $scope, $location, $window){
 
-    /*$scope.folders = {
-        "code": "1",
-        "documents": [
-            {
-                "documentName": "NewR",
-                "range": "1",
-                "filesList": [
-                    {
-                        "documentName": "R�servation",
-                        "range": "1",
-                        "documentUrl": "http://www.google.fr"
-                    },
-                    {
-                        "documentName": "Appel de fond",
-                        "range": "2",
-                        "documentUrl": "http://www.fcnantes.com"
-                    }
-                ],
-                "folderList": [
-                    {
-                        "documentName": "KF",
-                        "range": "1",
-                        "filesList": [
-                            {}
-                        ]
-                    },
-                    {
-                        "documentName": "SG",
-                        "range": "2",
-                        "filesList": [
-                            {}
-                        ]
-                    }
-                ]
-            },
-            {
-                "documentName": "SLE",
-                "range": "1",
-            }
-        ]
-    };*/
-
-    $scope.folders = {
+    /**$scope.folders = {
         "documents": [
             {
                 "documentName": "Assurance Auto",
@@ -114,12 +72,23 @@ app.controller('MenuCtrl', ['$translate', '$scope', '$location', '$rootScope', f
                 "range": "6"
             }
         ]
-    };
+    };*/
 
+    $scope.folders = {
+            "documents": [
+                {
+                    "documentName": "<<TODO>>",
+                    "range": "1",
+                    "showSubMenu": false,
+                    "folderList": []
+                }
+            ]
+        };
+    
     $scope.displaySubMenu1 = false;
     $scope.subMenu1 = {};
     
-    $scope.isAdmin = $rootScope.right;
+    $scope.isAdmin = JSON.parse(sessionStorage.getItem($window.sessionStorage.login)).right;
 
     $scope.openSubMenu1 = function(folder) {
         if (folder.showSubMenu == true) {

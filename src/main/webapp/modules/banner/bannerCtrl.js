@@ -1,18 +1,20 @@
-app.controller('BannerCtrl', ['$scope', '$location', '$rootScope', function ($scope, $location, $rootScope){
+app.controller('BannerCtrl', ['$scope', '$location', '$window', '$rootScope', function ($scope, $location, $window, $rootScope){
 
-    //$scope.user = {'login' : 'slegalludec'};
+    $scope.login = $window.sessionStorage.login;
 
-    $scope.login = $rootScope.login;
+    // Check if user have removed session 
+    if ($scope.login == undefined) {
+    	 $location.path("/connectionPage");
+    }
     
     /**
-     * Manage xhr connection
+     * Manage disconnection
      */
     $scope.disconnect = function() {
-		$rootScope.userId = "";
+		sessionStorage.removeItem($window.sessionStorage.login);
 		$rootScope.login = "";
-		$rootScope.right = "";
-		$rootScope.trackid = "";
-    	
+		$window.sessionStorage.removeItem("login");
+		
         $location.path("/connectionPage");
     };
 

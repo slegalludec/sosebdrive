@@ -2,7 +2,7 @@
 
 	<div class="usersListHeader">{{'TITLE_MANAGEMENT' | translate}}</div>
 
-	<alert-timeout classCSS="classCSS" msg="msg"></alert-timeout>
+	<alert-timeout ng-if="msg != ''" classCSS="classCSS" msg="msg"></alert-timeout>
 
 	<!-- <div ng-if="msg != ''" class="alert" ng-class="classCSS" role="alert">
 		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

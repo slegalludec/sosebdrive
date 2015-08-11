@@ -9,7 +9,7 @@ app.directive('alertTimeout', function ($timeout) {
         link: function(scope, element, attrs) {
             $timeout(function () {
                 element.remove();
-            }, 15000);
+            }, 5000);
         }
     };
 });

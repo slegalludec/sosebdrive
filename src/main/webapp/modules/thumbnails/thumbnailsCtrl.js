@@ -7,7 +7,7 @@ app.controller('ThumbnailsCtrl', ['$scope', '$http', 'LoggerSvc', 'DriveRestSvc'
 		var currentName = rootName;
 
 		$scope.files = DriveRestSvc.get({rootName : currentName}, function() {
-			LoggerSvc.log('success thumbnails', 'w');
+			LoggerSvc.log('success thumbnails');
 		});
 	}
 }]);

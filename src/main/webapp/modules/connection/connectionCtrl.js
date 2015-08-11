@@ -1,9 +1,9 @@
-app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$rootScope', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, $rootScope, ConnectionRestSvc, LoggerSvc){
+app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$window', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, $window, ConnectionRestSvc, LoggerSvc){
 
 	$scope.credentials = {};
 	$scope.errorMsg = {};
 	$scope.error = false;
-	$scope.user = {};
+	var userInfo = {};
 
 	/**
 	 * Connect to the application
@@ -16,11 +16,10 @@ app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$rootSco
 					if (response.responseCode == 1) {
 						LoggerSvc.log('success connect');
 						
-						// Update user response in scope
-						$rootScope.userId = response.userSession.userId;
-						$rootScope.login = response.userSession.login;
-						$rootScope.right = response.userSession.right;
-						$rootScope.trackid = response.userSession.trackid;
+						userInfo = JSON.stringify({'userId' : response.userSession.userId, 'right' : response.userSession.right, 'trackid' : response.userSession.trackid});
+						
+						$window.sessionStorage.login = response.userSession.login;
+						sessionStorage.setItem(response.userSession.login, userInfo);
 						
 						$location.path('/mainPage');
 					} else {
