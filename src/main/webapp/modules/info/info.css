@@ -1,0 +1,26 @@
+.info-pos {
+	position: absolute;
+	width: 350px;
+	left: 840px;
+	text-align: center;
+	height: 40px;
+	padding-top: 10px;
+	border-radius: 10px;
+	top: 60px;
+}
+
+.info-blue {
+	background-color: #daf5fe;
+	border: 1px solid #95caff;
+    color: #95C6E0;
+}
+
+.info-red {
+	background-color: #ff9f9f;
+	border: 1px solid red;
+}
+
+.info-orange {
+	background-color: #ffcb97;
+	border: 1px solid orange;
+}

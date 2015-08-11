@@ -11,6 +11,7 @@ var translations = {
         'END_DATE' : 'end date',
         'USER_RIGHT' : 'user right',
         'DISCONNECT' : 'You are disconnected !',
+        'USER_CONNECTED' : ' is connected !',
 
         'TITLE_MANAGEMENT' : 'Users management',
         'TITLE_USERS' : 'Users list',
@@ -42,6 +43,7 @@ var translations = {
         'END_DATE' : 'date de fin',
         'USER_RIGHT' : 'droit utilisateur',
         'DISCONNECT' : 'Vous êtes déconnecté !',
+        'USER_CONNECTED' : ' est connecté !',
 
         'TITLE_MANAGEMENT' : 'Gestion utilisateurs',
         'TITLE_USERS' : 'Liste utilisateurs',

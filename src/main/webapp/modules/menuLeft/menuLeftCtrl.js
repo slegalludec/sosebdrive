@@ -75,20 +75,22 @@ app.controller('MenuCtrl', ['$translate', '$scope', '$location', '$window', func
     };*/
 
     $scope.folders = {
-            "documents": [
-                {
-                    "documentName": "<<TODO>>",
-                    "range": "1",
-                    "showSubMenu": false,
-                    "folderList": []
-                }
-            ]
-        };
+        "documents": [
+            {
+                "documentName": "<<TODO>>",
+                "range": "1",
+                "showSubMenu": false,
+                "folderList": []
+            }
+        ]
+    };
     
     $scope.displaySubMenu1 = false;
     $scope.subMenu1 = {};
     
-    $scope.isAdmin = JSON.parse(sessionStorage.getItem($window.sessionStorage.login)).right;
+    if ($window.sessionStorage.login != undefined) {
+    	  $scope.isAdmin = JSON.parse(sessionStorage.getItem($window.sessionStorage.login)).right;
+    }
 
     $scope.openSubMenu1 = function(folder) {
         if (folder.showSubMenu == true) {

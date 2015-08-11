@@ -1,9 +1,10 @@
-app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$window', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, $window, ConnectionRestSvc, LoggerSvc){
+app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$window', '$rootScope', 'ConnectionRestSvc', 'LoggerSvc', function ($translate, $scope, $location, $window, $rootScope, ConnectionRestSvc, LoggerSvc){
 
 	$scope.credentials = {};
 	$scope.errorMsg = {};
 	$scope.error = false;
 	var userInfo = {};
+	$scope.user = {};
 
 	/**
 	 * Connect to the application
@@ -17,6 +18,9 @@ app.controller('ConnectionCtrl', ['$translate', '$scope', '$location', '$window'
 						LoggerSvc.log('success connect');
 						
 						userInfo = JSON.stringify({'userId' : response.userSession.userId, 'right' : response.userSession.right, 'trackid' : response.userSession.trackid});
+						
+						$scope.user = response.userSession.login;
+						$rootScope.isDisconnected = false;
 						
 						$window.sessionStorage.login = response.userSession.login;
 						sessionStorage.setItem(response.userSession.login, userInfo);
