@@ -28,7 +28,8 @@ app.controller('ThumbnailsCtrl', ['$scope', '$http', '$rootScope', 'LoggerSvc', 
 		DriveRestSvc.get({rootName : currentName}, 
 			function(response) {
 				$rootScope.files = response.contentsList;
-				$rootScope.paths.pop(response.rootName);
+				$rootScope.paths.splice(index+1, $rootScope.paths.length);
+								
 				LoggerSvc.log('success thumbnails');
 			}, function(response) {
 				LoggerSvc.log('error thumbnails : ' + response.data.status, 'e');
