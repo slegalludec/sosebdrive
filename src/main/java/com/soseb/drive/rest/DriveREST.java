@@ -16,7 +16,7 @@ import com.soseb.drive.models.Content;
 
 @RestController
 @RequestMapping(value = "/drive")
-public class MultimediaREST {
+public class DriveREST {
 
 	/**
 	 * Move in multimedia tree and create a list of folders with files
@@ -25,10 +25,10 @@ public class MultimediaREST {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Content> listFilesForFolder(@RequestParam(value = "rootName", required = false) final String rootName) {
 
-		File rootFolder = new File(NasConstants.URL_MULTIMEDIA__SERVER);
+		File rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL);
 
 		if (StringUtils.isNotBlank(rootName)) {
-			rootFolder = new File(NasConstants.URL_MULTIMEDIA__SERVER + rootName);
+			rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + rootName);
 		}
 		
 		List<Content> listFiles = new ArrayList<Content>();
@@ -38,7 +38,7 @@ public class MultimediaREST {
 			String fileName = fileEntry.getName();
 
 			Content content = new Content();
-			content.setUrl(rootFolder.getAbsolutePath() + "\\" + fileName);
+			content.setUrl(NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL + rootName +"/" + fileName);
 
 			// Manage the extension file and name
 			// Folder case

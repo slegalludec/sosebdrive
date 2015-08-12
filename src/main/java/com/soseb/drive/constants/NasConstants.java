@@ -1,12 +1,16 @@
 package com.soseb.drive.constants;
 
-public class NasConstants {
-	
+public class NasConstants {	
 	
 	/**
-	 * Url of multimedia server
+	 * Url of multimedia server (internal)
 	 */
-	public static final String URL_MULTIMEDIA__SERVER = "E:/sle/";
+	public static final String URL_MULTIMEDIA_SERVER_INTERNAL = "C://Program Files/Apache Software Foundation/Tomcat 7.0/webapps/";
+	
+	/**
+	 * Url of multimedia server (external)
+	 */
+	public static final String URL_MULTIMEDIA_SERVER_EXTERNAL = "http://localhost:8181/";
 	
 	/**
 	 * Url of authentication  file

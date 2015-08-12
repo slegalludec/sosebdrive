@@ -1,4 +1,4 @@
-app.controller('PictureCtrl', ['$scope', '$http', 'LoggerSvc', 'DriveRestSvc', function ($scope, $http, LoggerSvc, DriveRestSvc){
+app.controller('PictureCtrl', ['$scope', '$http', '$window', 'LoggerSvc', 'DriveRestSvc', function ($scope, $http, $window, LoggerSvc, DriveRestSvc){
 
     $scope.ext = 'icon_' + $scope.extension;
     $scope.currentCol = 'col' + $scope.position;
@@ -11,13 +11,12 @@ app.controller('PictureCtrl', ['$scope', '$http', 'LoggerSvc', 'DriveRestSvc', f
         $scope.isFolder = true;
     }
     
-    if ($scope.extension == 'png') {
+    if ($scope.extension == 'png' || $scope.extension == 'jpg') {
         $scope.isImage = true;
     }
 
     $scope.openDoc = function(url) {
-        var win = window.open(url, '_blank');
-        //win.focus();
+    	$window.open(url, '_blank');
     }
 
     $scope.openFolder = function(nameFolder) {
