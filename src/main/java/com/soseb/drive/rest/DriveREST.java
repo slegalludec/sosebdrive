@@ -1,58 +1,27 @@
 package com.soseb.drive.rest;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soseb.drive.common.FileType;
-import com.soseb.drive.constants.NasConstants;
-import com.soseb.drive.models.Content;
+import com.soseb.drive.controllers.DriveController;
+import com.soseb.drive.responses.DriveResponse;
 
 @RestController
 @RequestMapping(value = "/drive")
 public class DriveREST {
 
+	@Autowired
+	private DriveController driveCtrl;
+	
 	/**
 	 * Move in multimedia tree and create a list of folders with files
 	 * @return the multimedia content
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Content> listFilesForFolder(@RequestParam(value = "rootName", required = false) final String rootName) {
-
-		File rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL);
-
-		if (StringUtils.isNotBlank(rootName)) {
-			rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + rootName);
-		}
-		
-		List<Content> listFiles = new ArrayList<Content>();
-
-		for (final File fileEntry : rootFolder.listFiles()) {
-
-			String fileName = fileEntry.getName();
-
-			Content content = new Content();
-			content.setUrl(NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL + rootName +"/" + fileName);
-
-			// Manage the extension file and name
-			// Folder case
-			if (fileEntry.isDirectory()) {
-				content.setName(fileName);
-				content.setType(FileType.FOLDER_TYPE.getFileExtension());
-			} else {
-				content.setName(fileName.substring(0, fileName.length()-4));
-				content.setType(fileName.substring(fileName.length()-3, fileName.length()));
-			}
-
-			listFiles.add(content);
-		}
-
-		return listFiles;
+	public DriveResponse listFilesForFolder(@RequestParam(value = "rootName", required = false) final String rootName) {
+		return driveCtrl.listFilesForFolder(rootName);
 	}
 }

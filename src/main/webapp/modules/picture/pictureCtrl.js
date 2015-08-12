@@ -1,4 +1,4 @@
-app.controller('PictureCtrl', ['$scope', '$http', '$window', 'LoggerSvc', 'DriveRestSvc', function ($scope, $http, $window, LoggerSvc, DriveRestSvc){
+app.controller('PictureCtrl', ['$scope', '$http', '$window', '$location', '$rootScope', 'LoggerSvc', 'DriveRestSvc', function ($scope, $http, $window, $location, $rootScope, LoggerSvc, DriveRestSvc){
 
     $scope.ext = 'icon_' + $scope.extension;
     $scope.currentCol = 'col' + $scope.position;
@@ -16,12 +16,26 @@ app.controller('PictureCtrl', ['$scope', '$http', '$window', 'LoggerSvc', 'Drive
     }
 
     $scope.openDoc = function(url) {
-    	$window.open(url, '_blank');
+    	$window.open(url);
     }
 
     $scope.openFolder = function(nameFolder) {
-    	$scope.files = DriveRestSvc.get({rootName : nameFolder}, function() {
-    		LoggerSvc.log('success picture', 'w');
-    	});
+    	DriveRestSvc.get({rootName : nameFolder}, 
+    		function(response) {
+    		
+    			if(response.responseCode == 1) {
+        			$rootScope.files = response.contentsList;
+        			$rootScope.paths.push(response.rootName);
+        			LoggerSvc.log('success picture');
+    			} else {
+    				$rootScope.isEmpty = true;
+    				$rootScope.paths.push(response.rootName);
+        			LoggerSvc.log('success picture but folder empty', 'w');
+    			}
+    		},
+    		function(response) {
+    			LoggerSvc.log('error picture : ' + response.data.status, 'e');
+    		}
+    	);
     }
 }]);

@@ -23,6 +23,8 @@ var translations = {
         'BUTTON_CANCEL_USER' : 'Cancel',
 
         'PATTERN_DATE' : 'MM/dd/yyyy',
+        
+        'FOLDER_EMPTY' : 'the folder is empty :/',
 
         'ERROR_MSG_100' : 'login or password empty',
         'ERROR_MSG_101' : 'bad login or bad password',
@@ -55,6 +57,8 @@ var translations = {
         'BUTTON_CANCEL_USER' : 'Annuler',
 
         'PATTERN_DATE' : 'dd/MM/yyyy',
+        
+        'FOLDER_EMPTY' : 'Le dossier est vide :/ ',
 
         'ERROR_MSG_100' : 'login ou mot de passe vide',
         'ERROR_MSG_101' : 'mauvais login ou mauvais mot de passe',

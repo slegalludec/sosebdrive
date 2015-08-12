@@ -14,6 +14,7 @@ public enum StatusCode {
 	CODE_103(103, "authentication file not founded !"),
 	CODE_104(104, "fields are empty or null"),
 	CODE_105(105, "error during removed element"),
+	CODE_106(106, "folder is tempty"),
 	CODE_110(110, "unknow error"),
 	CODE_111(111, "ws error"),
 	CODE_112(112, "trackid is invalid");

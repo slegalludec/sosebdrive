@@ -5,12 +5,12 @@ public class NasConstants {
 	/**
 	 * Url of multimedia server (internal)
 	 */
-	public static final String URL_MULTIMEDIA_SERVER_INTERNAL = "C://Program Files/Apache Software Foundation/Tomcat 7.0/webapps/";
+	public static final String URL_MULTIMEDIA_SERVER_INTERNAL = "C://Program Files/Apache Software Foundation/Tomcat 7.0/webapps/picture";
 	
 	/**
 	 * Url of multimedia server (external)
 	 */
-	public static final String URL_MULTIMEDIA_SERVER_EXTERNAL = "http://localhost:8181/";
+	public static final String URL_MULTIMEDIA_SERVER_EXTERNAL = "http://localhost:8181/picture/";
 	
 	/**
 	 * Url of authentication  file
