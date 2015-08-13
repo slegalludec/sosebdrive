@@ -20,16 +20,19 @@ app.controller('PictureCtrl', ['$scope', '$http', '$window', '$location', '$root
     }
 
     $scope.openFolder = function(nameFolder) {
-    	DriveRestSvc.get({rootName : nameFolder}, 
-    		function(response) {
-    		
+    	
+    	var previousValue = $rootScope.paths[$rootScope.paths.length-1];
+    	var currentPath = previousValue + '/' + nameFolder;
+    	
+    	DriveRestSvc.get({rootName : currentPath}, 
+    		function(response) {    		
     			if(response.responseCode == 1) {
         			$rootScope.files = response.contentsList;
-        			$rootScope.paths.push(response.rootName);
+        			$rootScope.paths.push(currentPath);
         			LoggerSvc.log('success picture');
     			} else {
     				$rootScope.isEmpty = true;
-    				$rootScope.paths.push(response.rootName);
+    				$rootScope.paths.push(currentPath);
         			LoggerSvc.log('success picture but folder empty', 'w');
     			}
     		},

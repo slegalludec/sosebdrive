@@ -23,11 +23,11 @@ public class DriveController {
 	public DriveResponse listFilesForFolder(final String rootName) {
 
 		DriveResponse driveResponse = null;
-		File rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL);
-		String currentUrl = NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL;
+		File rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + NasConstants.ROOT_NAME);
+		String currentUrl = NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL + NasConstants.ROOT_NAME + "/";
 
-		if (StringUtils.isNotBlank(rootName)) {
-			rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + "/" + rootName);
+		if (StringUtils.isNotBlank(rootName) && !rootName.equals(NasConstants.ROOT_NAME)) {
+			rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + rootName + "/");
 			currentUrl = NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL + rootName + "/";
 		}
 
@@ -65,8 +65,7 @@ public class DriveController {
 			driveResponse.setContentsList(listFiles);
 			
 			if (StringUtils.isBlank(rootName)) {
-				String[] splitInitUrl = NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL.split("/");
-				driveResponse.setRootName(splitInitUrl[splitInitUrl.length-1]);
+				driveResponse.setRootName(NasConstants.ROOT_NAME);
 			} else {
 				driveResponse.setRootName(rootName);
 			}

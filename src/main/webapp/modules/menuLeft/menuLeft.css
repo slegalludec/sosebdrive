@@ -1,44 +1,43 @@
 .menuLeft {
-    position: absolute;
-    width: 260px;
-    height: 807px;
-    background-color: aliceblue;
-    /*opacity: 0.9;*/
-    top: 187px;
+	position: absolute;
+	width: 129px;
+	height: 807px;
+	background-color: aliceblue;
+	top: 187px;
 }
 
 .administration {
-    position: absolute;
-    top: 774px;
-    left: 11px;
+	position: absolute;
+	top: 774px;
+	left: 11px;
 }
 
 .headerItem {
-    background-color: gray;
-    height: 36px;
-    color: white;
-    width: 260px;
-    padding-left: 11px;
-    padding-top: 9px;
+	background-color: gray;
+	height: 36px;
+	color: white;
+	width: 129px;
+	padding-left: 18px;
+	padding-top: 9px;
 }
 
 .headerAdm {
-    position: absolute;
-    top: 730px;
+	position: absolute;
+	top: 730px;
 }
 
 .treeMargin {
-    padding-left: 11px;
+	padding-left: 11px;
 }
 
 .treeItem {
-    padding-left: 3px;
+	padding-left: 3px;
 }
 
 .treeMargin2 {
-    padding-left: 31px;
+	padding-left: 31px;
 }
 
 .treeItem2 {
-    padding-left: 4px;
+	padding-left: 4px;
 }

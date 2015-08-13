@@ -50,59 +50,67 @@
     position: absolute;
 }
 
-.col0, .col14, .col28, .col42, .col56, .col70 {
+.col0, .col16, .col32, .col48, .col64, .col80 {
     left: 30px;
 }
 
-.col1, .col15, .col29, .col43, .col57, .col71 {
+.col1, .col17, .col33, .col49, .col65, .col81 {
     left: 140px;
 }
 
-.col2, .col16, .col30, .col44, .col58, .col72 {
+.col2, .col18, .col34, .col50, .col66, .col82 {
     left: 250px;
 }
 
-.col3, .col17, .col31, .col45, .col59, .col73 {
+.col3, .col19, .col35, .col51, .col67, .col83 {
     left: 360px;
 }
-.col4, .col18, .col32, .col46, .col60, .col74 {
+.col4, .col20, .col36, .col52, .col68, .col84 {
     left: 470px;
 }
 
-.col5, .col19, .col33, .col47, .col61, .col75 {
+.col5, .col21, .col37, .col53, .col69, .col85 {
     left: 580px;
 }
 
-.col6, .col20, .col34, .col48, .col62, .col76 {
+.col6, .col22, .col38, .col54, .col70, .col86 {
     left: 690px;
 }
 
-.col7, .col21, .col35, .col49, .col63, .col77 {
+.col7, .col23, .col39, .col55, .col71, .col87 {
     left: 800px;
 }
 
-.col8, .col22, .col36, .col50, .col64, .col78 {
+.col8, .col24, .col40, .col56, .col72, .col88 {
     left: 915px;
 }
 
-.col9, .col23, .col37, .col51, .col65, .col79 {
+.col9, .col25, .col41, .col57, .col73, .col89 {
     left: 1025px;
 }
 
-.col10, .col24, .col38, .col52, .col66, .col80 {
+.col10, .col26, .col42, .col58, .col74, .col90 {
     left: 1135px;
 }
 
-.col11, .col25, .col39, .col53, .col67, .col81 {
+.col11, .col27, .col43, .col59, .col75, .col91 {
     left: 1245px;
 }
 
-.col12, .col26, .col40, .col54, .col68, .col82 {
+.col12, .col28, .col44, .col60, .col76, .col92 {
     left: 1355px;
 }
 
-.col13, .col27, .col41, .col55, .col69, .col83 {
+.col13, .col29, .col45, .col61, .col77, .col93 {
     left: 1465px;
+}
+
+.col14, .col30, .col46, .col62, .col78, .col94 {
+    left: 1575px;
+}
+
+.col15, .col31, .col47, .col63, .col79, .col95 {
+    left: 1685px;
 }
 
 .raw0 {

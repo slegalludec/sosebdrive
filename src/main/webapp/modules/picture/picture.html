@@ -5,7 +5,6 @@
     </div>
     <a ng-if="!isFolder" href="#" ng-click="openDoc(url)">
         <div ng-if="!isImage" class="{{ext}}"></div>
-        <!-- <div ng-if="isImage" ng-src="{{url}}" class="{{ext}}"></div> -->
         <img ng-if="isImage" alt="Picture" ng-src="{{url}}" class="{{ext}}">
         <span class="label_doc">{{name | truncate}}</span>
     </a>

@@ -5,7 +5,7 @@ app.controller('ThumbnailsCtrl', ['$scope', '$http', '$rootScope', 'LoggerSvc', 
 	$rootScope.paths = [];
 	
 	/**
-	 * change list of document with rootName
+	 * Change list of document with rootName
 	 */
 	$scope.initList = function(rootName) {
 		
@@ -22,15 +22,26 @@ app.controller('ThumbnailsCtrl', ['$scope', '$http', '$rootScope', 'LoggerSvc', 
 		);
 	};
 	
+	/**
+	 * Change folder in path
+	 */
 	$scope.changeFolder = function(index) {
 		var currentName = $rootScope.paths.valueOf()[index];
 
 		DriveRestSvc.get({rootName : currentName}, 
 			function(response) {
-				$rootScope.files = response.contentsList;
-				$rootScope.paths.splice(index+1, $rootScope.paths.length);
-								
-				LoggerSvc.log('success thumbnails');
+			
+				if(response.responseCode == 1) {
+	    			$rootScope.files = response.contentsList;
+	    			$rootScope.isEmpty = false;
+	    			$rootScope.paths.splice(index+1, $rootScope.paths.length);
+					LoggerSvc.log('success thumbnails');
+				} else {
+					$rootScope.isEmpty = true;
+					$rootScope.paths.splice(index+1, $rootScope.paths.length);
+	    			LoggerSvc.log('success thumbnails but folder empty', 'w');
+				}
+							
 			}, function(response) {
 				LoggerSvc.log('error thumbnails : ' + response.data.status, 'e');
 			}
