@@ -96,7 +96,7 @@ public class UserController {
 
 				// indicate the first insertion
 				if (fistInsert) {
-					userResponse.setResponseCode(StatusCode.COD_10.getCode());
+					userResponse.setResponseCode(StatusCode.CODE_10.getCode());
 					userResponse.setResponseError("New file " + xmlFile + " is created !");
 				} else {
 					userResponse.setResponseCode(StatusCode.CODE_3.getCode());
