@@ -39,7 +39,7 @@ public class ConnectionController {
 		Element rootNode = null;
 
 		// login or password is empty
-		if (StringUtils.isBlank(connection.getLogin()) || StringUtils.isBlank(connection.getPassword())) {
+		if (connection == null || StringUtils.isBlank(connection.getLogin()) || StringUtils.isBlank(connection.getPassword())) {
 			connectionResponse.setResponseCode(StatusCode.CODE_100.getCode());
 			connectionResponse.setResponseError(StatusCode.CODE_100.getDescription());
 		} else {
@@ -82,6 +82,7 @@ public class ConnectionController {
 								userSession.setTrackid(TrackidUtils.generateTrackId());
 								
 								connectionResponse.setResponseCode(StatusCode.CODE_1.getCode());
+								connectionResponse.setResponseError(StatusCode.CODE_1.getDescription());
 								connectionResponse.setUserSession(userSession);
 							} else {
 								// end date of right is expired

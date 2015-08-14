@@ -2,6 +2,8 @@ package com.soseb.drive.models;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * User model
  * @author slegalludec
@@ -22,26 +24,31 @@ public class User implements Serializable {
 	/**
 	 * user login
 	 */
+	@NotNull
 	private String login;
 	
 	/**
 	 * user password
 	 */
+	@NotNull
 	private String password;
 	
 	/**
 	 * user right
 	 */
+	@NotNull
 	private int right;
 	
 	/**
 	 * right start date
 	 */
+	@NotNull
 	private String rightStartDate;
 	
 	/**
 	 * right end date
 	 */
+	@NotNull
 	private String rightEndDate;
 	
 	/**

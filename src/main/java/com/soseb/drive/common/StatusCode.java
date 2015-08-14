@@ -22,8 +22,7 @@ public enum StatusCode {
 	CODE_108(108, "renaming of folder is failed"),
 	CODE_109(109, "removing of folder is failed"),
 	CODE_110(110, "unknow error"),
-	CODE_111(111, "ws error"),
-	CODE_112(112, "trackid is invalid");
+	CODE_111(111, "ws error");
 
 	/**
 	 * status code

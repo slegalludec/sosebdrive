@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -44,7 +43,7 @@ public class UserController {
 
 		try {
 
-			if (!checkField(userBdd)) {
+			if (!checkFields(userBdd)) {
 				userResponse = new UserResponse();
 				userResponse.setResponseCode(StatusCode.CODE_104.getCode());
 				userResponse.setResponseError(StatusCode.CODE_104.getDescription());
@@ -73,11 +72,17 @@ public class UserController {
 
 					// get the last id
 					List<Element> listUsers = rootNode.getChildren("user");
-					int nextId = Integer.parseInt(listUsers.get(listUsers.size()-1).getAttributeValue("id")) + 1;
 
 					// user element
 					user = new Element("user");
-					user.setAttribute(new Attribute("id", String.valueOf(nextId)));
+
+					// important for unit test
+					if (userBdd.getUserId() != 0) {
+						user.setAttribute(new Attribute("id", String.valueOf(userBdd.getUserId())));
+					} else {
+						int nextId = Integer.parseInt(listUsers.get(listUsers.size()-1).getAttributeValue("id")) + 1;
+						user.setAttribute(new Attribute("id", String.valueOf(nextId)));
+					}
 				}
 
 				user.addContent(new Element("login").setText(userBdd.getLogin()));
@@ -142,7 +147,7 @@ public class UserController {
 				userResponse = new UserResponse();
 				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
 				userResponse.setResponseError(StatusCode.CODE_103.getDescription()); 
-			} else if (!checkField(userBdd)) {
+			} else if (!checkFields(userBdd)) {
 				userResponse = new UserResponse();
 				userResponse.setResponseCode(StatusCode.CODE_104.getCode());
 				userResponse.setResponseError(StatusCode.CODE_104.getDescription()); 			
@@ -191,78 +196,69 @@ public class UserController {
 	public UserResponse delete(final Integer userId) {
 
 		UserResponse userResponse = null;
+		Document doc = null;
+		Element rootNode = null;
+		File file = new File(xmlFile);
+		boolean isRemoved = false;
 
-		//if (TrackidUtils.trackidIsValid(userTrackid, trackid)) {
-			Document doc = null;
-			Element rootNode = null;
-			File file = new File(xmlFile);
-			boolean isRemoved = false;
+		try {
 
-			try {
+			// file doesn't exist
+			if (!file.exists()) {
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_103.getCode());
+				userResponse.setResponseError(StatusCode.CODE_103.getDescription()); 
+			} else if (userId == null || userId < 1) {
+				userResponse = new UserResponse();
+				userResponse.setResponseCode(StatusCode.CODE_104.getCode());
+				userResponse.setResponseError(StatusCode.CODE_104.getDescription()); 								
+			} else {
 
-				// file doesn't exist
-				if (!file.exists()) {
-					userResponse = new UserResponse();
-					userResponse.setResponseCode(StatusCode.CODE_103.getCode());
-					userResponse.setResponseError(StatusCode.CODE_103.getDescription()); 
-				} else if (userId == null || userId == 0) {
-					userResponse = new UserResponse();
-					userResponse.setResponseCode(StatusCode.CODE_104.getCode());
-					userResponse.setResponseError(StatusCode.CODE_104.getDescription()); 								
-				} else {
+				// get the current xml file
+				SAXBuilder builder = new SAXBuilder();		 
+				doc = (Document) builder.build(file);
+				rootNode = doc.getRootElement();
 
-					// get the current xml file
-					SAXBuilder builder = new SAXBuilder();		 
-					doc = (Document) builder.build(file);
-					rootNode = doc.getRootElement();
+				// get the last id
+				List<Element> listUsers = rootNode.getChildren("user");
+				Iterator<Element> itr = listUsers.iterator();
 
-					// get the last id
-					List<Element> listUsers = rootNode.getChildren("user");
-					Iterator<Element> itr = listUsers.iterator();
-
-					while (itr.hasNext()) {
-						Element child = (Element) itr.next();
-						String att = child.getAttributeValue("id"); 
-						if( Integer.parseInt(att) == userId){
-							itr.remove();
-							isRemoved = true;
-							break;
-						}
-					}
-
-					XMLOutputter xmlOutput = new XMLOutputter();
-					xmlOutput.setFormat(Format.getPrettyFormat());
-
-					xmlOutput.output(doc, new FileWriter(xmlFile));
-
-					userResponse = list();
-					if (isRemoved) {					
-						userResponse.setResponseCode(StatusCode.CODE_5.getCode());
-						userResponse.setResponseError("User with id " + userId + " is removed !");
-					} else {
-						userResponse.setResponseCode(StatusCode.CODE_105.getCode());
-						userResponse.setResponseError(StatusCode.CODE_105.getDescription());
+				while (itr.hasNext()) {
+					Element child = (Element) itr.next();
+					String att = child.getAttributeValue("id"); 
+					if( Integer.parseInt(att) == userId){
+						itr.remove();
+						isRemoved = true;
+						break;
 					}
 				}
 
-			} catch (IOException io) {
-				io.printStackTrace();
-				userResponse = new UserResponse();
-				userResponse.setResponseCode(StatusCode.CODE_111.getCode());
-				userResponse.setResponseError(io.getMessage());
-			} catch (JDOMException jdom) {
-				jdom.printStackTrace();
-				userResponse = new UserResponse();
-				userResponse.setResponseCode(StatusCode.CODE_111.getCode());
-				userResponse.setResponseError(jdom.getMessage());
+				XMLOutputter xmlOutput = new XMLOutputter();
+				xmlOutput.setFormat(Format.getPrettyFormat());
+
+				xmlOutput.output(doc, new FileWriter(xmlFile));
+
+				userResponse = list();
+				if (isRemoved) {					
+					userResponse.setResponseCode(StatusCode.CODE_5.getCode());
+					userResponse.setResponseError("User with id " + userId + " is removed !");
+				} else {
+					userResponse.setResponseCode(StatusCode.CODE_105.getCode());
+					userResponse.setResponseError(StatusCode.CODE_105.getDescription());
+				}
 			}
-		/**} else {
+
+		} catch (IOException io) {
+			io.printStackTrace();
 			userResponse = new UserResponse();
-			userResponse.setResponseCode(StatusCode.CODE_112.getCode());
-			userResponse.setResponseError(StatusCode.CODE_112.getDescription());
-		}*/
-
-
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(io.getMessage());
+		} catch (JDOMException jdom) {
+			jdom.printStackTrace();
+			userResponse = new UserResponse();
+			userResponse.setResponseCode(StatusCode.CODE_111.getCode());
+			userResponse.setResponseError(jdom.getMessage());
+		}
 		return userResponse;
 	}
 
@@ -354,16 +350,12 @@ public class UserController {
 	 * 		the current user
 	 * @return boolean to indicate if ok or not
 	 */
-	private boolean checkField(final User user) {
-		if (StringUtils.isNotBlank(user.getLogin()) ||
-				StringUtils.isNotBlank(user.getPassword()) ||
-				user.getRightStartDate() != null || 
-				user.getRightEndDate() != null || 
-				user.getRight() == 0) {
-			return true;
-		} else {
+	private boolean checkFields(final User user) {
+		if (user == null || user.getLogin() == null || user.getPassword() == null || user.getRightStartDate() == null || user.getRightEndDate() == null || user.getRight() < 1) {
 			return false;
+		} else {
+			return true;
 		}
 	}
-	
+
 }
