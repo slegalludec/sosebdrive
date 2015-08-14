@@ -24,7 +24,7 @@ public class DriveController {
 	public DriveResponse listFilesForFolder(final String rootName) {
 
 		DriveResponse driveResponse = null;
-		File rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + NasConstants.ROOT_NAME);
+		File rootFolder = new File(NasConstants.URL_MULTIMEDIA_SERVER_INTERNAL + NasConstants.ROOT_NAME + "/");
 		String currentUrl = NasConstants.URL_MULTIMEDIA_SERVER_EXTERNAL + NasConstants.ROOT_NAME + "/";
 
 		if (StringUtils.isNotBlank(rootName) && !rootName.equals(NasConstants.ROOT_NAME)) {
