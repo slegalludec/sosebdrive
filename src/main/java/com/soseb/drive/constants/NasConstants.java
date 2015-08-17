@@ -5,12 +5,12 @@ public class NasConstants {
 	/**
 	 * Url of multimedia server (internal)
 	 */
-	public static final String URL_MULTIMEDIA_SERVER_INTERNAL = "localhost/";
+	public static final String URL_MULTIMEDIA_SERVER_INTERNAL = "C://Apache2.2/htdocs/";
 	
 	/**
 	 * Url of multimedia server (external)
 	 */
-	public static final String URL_MULTIMEDIA_SERVER_EXTERNAL = "localhost/";
+	public static final String URL_MULTIMEDIA_SERVER_EXTERNAL = "http://localhost/";
 	
 	/**
 	 * Root name

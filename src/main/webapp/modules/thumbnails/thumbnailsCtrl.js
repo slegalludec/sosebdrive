@@ -13,9 +13,17 @@ app.controller('ThumbnailsCtrl', ['$scope', '$http', '$rootScope', 'LoggerSvc', 
 
 		DriveRestSvc.get({rootName : currentName}, 
 			function(response) {
-				$rootScope.files = response.contentsList;
+			
+				if(response.responseCode == 1) {
+					$rootScope.files = response.contentsList;
+					LoggerSvc.log('success thumbnails');
+				} else {
+					$rootScope.isEmpty = true;
+	    			LoggerSvc.log('success thumbnails but folder empty', 'w');
+				}
+				
 				$rootScope.paths.push(response.rootName);
-				LoggerSvc.log('success thumbnails');
+				
 			}, function(response) {
 				LoggerSvc.log('error thumbnails : ' + response.data.status, 'e');
 			}

@@ -1,10 +1,10 @@
 app.factory('ConnectionRestSvc', ['$resource', function($resource) {
 	
 	var factory = {
-		connection : $resource('/authentication/connection', {}, {
+		connection : $resource('/ws/authentication/connection', {}, {
 			connect: {method:'POST'}
 		}),
-		disconnection : $resource('/authentication/disconnection', {}, {
+		disconnection : $resource('/ws/authentication/disconnection', {}, {
 			disconnect: {method:'POST'}
 		})
 	}
