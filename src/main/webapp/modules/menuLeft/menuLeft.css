@@ -3,12 +3,28 @@
 	width: 129px;
 	height: 807px;
 	background-color: aliceblue;
-	top: 187px;
+	top: 77px;
 }
 
 .administration {
 	position: absolute;
 	top: 774px;
+	left: 11px;
+}
+
+.file {
+	position: absolute;
+	top: 90px;
+	left: 11px;
+}
+
+.pos {
+	padding-left: 5px;	
+}
+
+.folder {
+	position: absolute;
+	top: 50px;
 	left: 11px;
 }
 

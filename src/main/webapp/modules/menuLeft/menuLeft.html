@@ -1,33 +1,25 @@
 <div class="menuLeft">
 
-    <div class="headerItem">
-        <span>{{'FOLDERS' | translate}}</span>
-    </div>
+	<div class="headerItem">
+		<span>{{'ACTIONS' | translate}}</span>
+	</div>
 
-    <div class="tree" ng-click="changeFocus()">
-        <div ng-repeat="folder in folders.documents | orderBy : '+range'">
+	<div class="folder">
+		<span class="glyphicon glyphicon-folder-open" aria-hidden="true"> </span> <a
+			class="pos" href="#createFolder"> {{'NEW_FOLDER' | translate}}</a>
+	</div>
 
-            <div ng-click="openSubMenu1(folder)">
-                <span ng-if="folder.folderList != null && !folder.showSubMenu" class="treeMargin glyphicon glyphicon-plus"></span>
-                <span ng-if="folder.folderList == null || folder.showSubMenu" class="treeMargin glyphicon glyphicon-minus"></span>
-                <span class="treeItem">{{folder.documentName}}</span>
-            </div>
+	<div class="file">
+		<span class="glyphicon glyphicon-file" aria-hidden="true"> </span> <a
+			href="#createFile">{{'NEW_FILE' | translate}}</a>
+	</div>
 
-            <div ng-if="folder.folderList != null && folder.showSubMenu" ng-repeat="subFolder in folder.folderList | orderBy: '+range'">
-                <div ng-click="openSubMenu1(subFolder)">
-                   <span class="treeMargin2 glyphicon glyphicon-plus"></span>
-                    <span class="treeItem2">{{subFolder.documentName}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div ng-if="isAdmin == 1" class="headerItem headerAdm">
+		<span>{{'ADMINISTRATION' | translate}}</span>
+	</div>
 
-    <div ng-if="isAdmin == 1" class="headerItem headerAdm">
-        <span>{{'ADMINISTRATION' | translate}}</span>
-    </div>
-
-    <div ng-if="isAdmin == 1" class="administration">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"> </span>
-        <a href="#userManagementPage">{{'ADMIN' | translate}}</a>
-    </div>
+	<div ng-if="isAdmin == 1" class="administration">
+		<span class="glyphicon glyphicon-cog" aria-hidden="true"> </span> <a
+			href="#userManagementPage">{{'ADMIN' | translate}}</a>
+	</div>
 </div>

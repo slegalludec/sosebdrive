@@ -1,9 +1,9 @@
 <div class="{{currentCol}} {{currentRaw}} posElt">
-    <div ng-if="isFolder" ng-click="openFolder(name)">
+    <div ng-if="isFolder" ng-dblclick="openFolder(name)">
         <div class="{{ext}}"></div>
         <span class="label_doc">{{name | truncate}}</span>
     </div>
-    <a ng-if="!isFolder" href="#" ng-click="openDoc(url)">
+    <a ng-if="!isFolder" href="#" ng-dblclick="openDoc(url)">
         <div ng-if="!isImage" class="{{ext}}"></div>
         <img ng-if="isImage" alt="Picture" ng-src="{{url}}" class="{{ext}}">
         <span class="label_doc">{{name | truncate}}</span>
